@@ -1,0 +1,334 @@
+version: '3.8'
+
+services:
+  # =================================================================
+  # DATABASE SERVICES
+  # =================================================================
+  
+  # PostgreSQL - Primary database for users, courses, assessments
+  postgres:
+    image: postgres:15-alpine
+    container_name: elearning_postgres
+    environment:
+      POSTGRES_DB: elearning_platform
+      POSTGRES_USER: elearning_user
+      POSTGRES_PASSWORD: dev_password_123
+      POSTGRES_MULTIPLE_DATABASES: auth_db,user_db,content_db,assessment_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./databases/postgresql/init:/docker-entrypoint-initdb.d
+    networks:
+      - elearning_network
+
+  # MongoDB - Document storage for content and media
+  mongodb:
+    image: mongo:6
+    container_name: elearning_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: elearning_admin
+      MONGO_INITDB_ROOT_PASSWORD: dev_password_123
+      MONGO_INITDB_DATABASE: content_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./databases/mongodb/init:/docker-entrypoint-initdb.d
+    networks:
+      - elearning_network
+
+  # Redis - Caching and session management
+  redis:
+    image: redis:7-alpine
+    container_name: elearning_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --requirepass dev_password_123
+    networks:
+      - elearning_network
+
+  # Elasticsearch - Search and analytics
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elearning_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - elearning_network
+
+  # =================================================================
+  # BACKEND SERVICES
+  # =================================================================
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile.dev
+    container_name: elearning_api_gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - REDIS_URL=redis://elearning_redis:6379
+    volumes:
+      - ./backend/api-gateway:/app
+      - /app/node_modules
+    depends_on:
+      - redis
+      - postgres
+      - mongodb
+    networks:
+      - elearning_network
+
+  # Authentication Service
+  auth-service:
+    build:
+      context: ./backend/auth-service
+      dockerfile: Dockerfile.dev
+    container_name: elearning_auth_service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_URL=postgresql://elearning_user:dev_password_123@postgres:5432/auth_db
+      - REDIS_URL=redis://elearning_redis:6379
+      - JWT_SECRET=dev_jwt_secret_key_2024
+    volumes:
+      - ./backend/auth-service:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - elearning_network
+
+  # User Service
+  user-service:
+    build:
+      context: ./backend/user-service
+      dockerfile: Dockerfile.dev
+    container_name: elearning_user_service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - DATABASE_URL=postgresql://elearning_user:dev_password_123@postgres:5432/user_db
+      - REDIS_URL=redis://elearning_redis:6379
+    volumes:
+      - ./backend/user-service:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - elearning_network
+
+  # Content Service
+  content-service:
+    build:
+      context: ./backend/content-service
+      dockerfile: Dockerfile.dev
+    container_name: elearning_content_service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+      - DATABASE_URL=postgresql://elearning_user:dev_password_123@postgres:5432/content_db
+      - MONGODB_URL=mongodb://elearning_admin:dev_password_123@mongodb:27017/content_db?authSource=admin
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    volumes:
+      - ./backend/content-service:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+      - mongodb
+      - elasticsearch
+    networks:
+      - elearning_network
+
+  # =================================================================
+  # AI/ML SERVICES (Python FastAPI)
+  # =================================================================
+
+  # Speech Recognition Service
+  speech-service:
+    build:
+      context: ./ai-services/speech-recognition
+      dockerfile: Dockerfile.dev
+    container_name: elearning_speech_service
+    ports:
+      - "8001:8001"
+    environment:
+      - ENV=development
+      - PORT=8001
+      - REDIS_URL=redis://elearning_redis:6379
+    volumes:
+      - ./ai-services/speech-recognition:/app
+      - speech_models:/app/models
+    depends_on:
+      - redis
+    networks:
+      - elearning_network
+
+  # NLP Service
+  nlp-service:
+    build:
+      context: ./ai-services/nlp-service
+      dockerfile: Dockerfile.dev
+    container_name: elearning_nlp_service
+    ports:
+      - "8002:8002"
+    environment:
+      - ENV=development
+      - PORT=8002
+      - REDIS_URL=redis://elearning_redis:6379
+    volumes:
+      - ./ai-services/nlp-service:/app
+      - nlp_models:/app/models
+    depends_on:
+      - redis
+    networks:
+      - elearning_network
+
+  # Translation Service
+  translation-service:
+    build:
+      context: ./ai-services/translation-service
+      dockerfile: Dockerfile.dev
+    container_name: elearning_translation_service
+    ports:
+      - "8003:8003"
+    environment:
+      - ENV=development
+      - PORT=8003
+      - REDIS_URL=redis://elearning_redis:6379
+    volumes:
+      - ./ai-services/translation-service:/app
+      - translation_models:/app/models
+    depends_on:
+      - redis
+    networks:
+      - elearning_network
+
+  # =================================================================
+  # FRONTEND SERVICES
+  # =================================================================
+
+  # Web Application (React.js)
+  web-app:
+    build:
+      context: ./frontend/web-app
+      dockerfile: Dockerfile.dev
+    container_name: elearning_web_app
+    ports:
+      - "3100:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3000
+      - REACT_APP_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend/web-app:/app
+      - /app/node_modules
+    depends_on:
+      - api-gateway
+    networks:
+      - elearning_network
+
+  # Admin Portal (Next.js)
+  admin-portal:
+    build:
+      context: ./frontend/admin-portal
+      dockerfile: Dockerfile.dev
+    container_name: elearning_admin_portal
+    ports:
+      - "3200:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3000
+      - NODE_ENV=development
+    volumes:
+      - ./frontend/admin-portal:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - api-gateway
+    networks:
+      - elearning_network
+
+  # =================================================================
+  # DEVELOPMENT TOOLS
+  # =================================================================
+
+  # pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: elearning_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@quartermasters.me
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - elearning_network
+
+  # MongoDB Express for MongoDB management
+  mongo-express:
+    image: mongo-express:latest
+    container_name: elearning_mongo_express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: elearning_admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: dev_password_123
+      ME_CONFIG_MONGODB_URL: mongodb://elearning_admin:dev_password_123@mongodb:27017/
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - elearning_network
+
+  # Redis Commander for Redis management
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: elearning_redis_commander
+    environment:
+      REDIS_HOSTS: local:elearning_redis:6379
+      REDIS_PASSWORD: dev_password_123
+    ports:
+      - "8082:8081"
+    depends_on:
+      - redis
+    networks:
+      - elearning_network
+
+# =================================================================
+# NETWORKS & VOLUMES
+# =================================================================
+
+networks:
+  elearning_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
+  elasticsearch_data:
+  speech_models:
+  nlp_models:
+  translation_models:

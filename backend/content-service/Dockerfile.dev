@@ -1,0 +1,17 @@
+FROM node:18-alpine
+
+# Install FFmpeg for media processing
+RUN apk add --no-cache ffmpeg
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN mkdir -p logs uploads/lessons uploads/courses
+
+EXPOSE 3003
+
+CMD ["npm", "run", "dev"]

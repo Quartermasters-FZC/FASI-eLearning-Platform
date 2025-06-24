@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered eLearning Platform - St Michael LLC</title>
+    <link rel="icon" href="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: St. Michael Enterprises Brand Colors (Dark Blue #0A2F5C & Deep Red #A02040) -->
+    <!-- Application Structure Plan: Redesigned from scratch. Mobile-first, responsive SPA. Collapsible sidebar navigation. Dynamic AI-themed banner on overview. 'Platform in Action' mock-ups extensively detail AI functionalities for Students, Tutors, Team Leader, and Admin/COR. 'About' section comprehensively covers St Michael LLC's AI capabilities and RFP alignment, using provided documents. Enhanced UI/UX for intuitiveness and visual appeal. -->
+    <!-- Visualization & Content Choices: Overview cards highlight AI benefits. Tabbed sections for detailed content. HTML table for requirements. Workflow diagram (HTML/CSS). Chart.js for AI-driven analytics visualization. 'Platform in Action' mock-ups use HTML/CSS with AI-specific textual cues and UI elements (e.g., AI feedback icons, predictive analytic displays, automated report generation prompts). 'About' section provides a narrative on St Michael LLC's AI-first strategy. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. (Using Unicode and simple CSS for icons where possible; inline SVGs for essential UI icons like menu/close are common with Tailwind and treated as structured HTML elements) -->
+    <style>
+        :root {
+            --brand-blue: #0A2F5C;
+            --brand-red: #A02040;
+            --brand-blue-light: #EBF2FA;
+            --brand-red-light: #FBE9EE;
+            --text-primary: #1f2937; /* gray-800 */
+            --text-secondary: #4b5563; /* gray-600 */
+            --bg-light: #f9fafb; /* gray-50 */
+            --border-color: #e5e7eb; /* gray-200 */
+        }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: var(--bg-light); color: var(--text-primary); }
+        .sidebar-icon { width: 1.25rem; height: 1.25rem; flex-shrink: 0; margin-right: 0.75rem; }
+        
+        .brand-blue-text { color: var(--brand-blue); }
+        .brand-blue-bg { background-color: var(--brand-blue); }
+        .brand-blue-border { border-color: var(--brand-blue); }
+        .hover-brand-blue-dark:hover { background-color: #08254A; }
+
+        .brand-red-text { color: var(--brand-red); }
+        .brand-red-bg { background-color: var(--brand-red); }
+        .brand-red-border { border-color: var(--brand-red); }
+        .hover-brand-red-dark:hover { background-color: #801933; }
+        
+        .nav-item { display: flex; align-items: center; padding: 0.75rem 1rem; border-radius: 0.375rem; color: var(--text-secondary); transition: background-color 0.2s, color 0.2s; font-weight: 500; font-size: 0.9rem;}
+        .nav-item:hover { background-color: var(--brand-blue-light); color: var(--brand-blue); }
+        .nav-item.active { background-color: var(--brand-blue-light); color: var(--brand-blue); border-left: 4px solid var(--brand-blue); font-weight: 600;}
+        
+        .tab-btn { padding: 0.75rem 1rem; font-weight: 600; color: var(--text-secondary); border-bottom: 3px solid transparent; transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
+        .tab-btn.active { border-bottom-color: var(--brand-blue); color: var(--brand-blue); }
+        .tab-btn:hover { color: var(--brand-blue); border-bottom-color: var(--brand-red); }
+        
+        .content-section, .tab-content { display: none; }
+        .content-section.active, .tab-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 1rem auto; height: 350px; max-height: 400px; }
+        @media (max-width: 768px) { .chart-container { height: 300px; max-height: 350px; } }
+        
+        .card { background-color: #ffffff; border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; box-shadow: 0 4px 12px -1px rgba(0,0,0,0.05), 0 2px 8px -1px rgba(0,0,0,0.03); margin-bottom: 1.5rem; transition: box-shadow 0.3s ease-in-out; }
+        .card:hover { box-shadow: 0 10px 20px -3px rgba(0,0,0,0.07), 0 4px 8px -2px rgba(0,0,0,0.04); }
+        .card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;}
+        .card-subtitle { font-size: 1rem; font-weight: 600; color: var(--brand-blue); margin-bottom: 0.75rem; }
+        
+        .btn { padding: 0.6rem 1.2rem; border-radius: 0.5rem; font-size: 0.875rem; text-align: center; display: inline-flex; align-items:center; justify-content:center; cursor: pointer; transition: background-color 0.2s, transform 0.1s ease-out, box-shadow 0.2s; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); font-weight: 500; }
+        .btn-primary { background-color: var(--brand-blue); color: white; }
+        .btn-primary:hover { background-color: #08254A; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transform: translateY(-1px); }
+        .btn-secondary { background-color: var(--brand-red); color: white; }
+        .btn-secondary:hover { background-color: #801933; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transform: translateY(-1px); }
+        .btn-tertiary { background-color: #4b5563; color:white; } 
+        .btn-tertiary:hover { background-color: #374151; } 
+        .btn:active { transform: translateY(0px); }
+
+        .form-input { border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.6rem; width: 100%; font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-input:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(10, 47, 92, 0.15); outline: none;}
+        
+        .ai-badge { background-color: var(--brand-red); color: white; font-size: 0.65rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 9999px; display: inline-block; margin-left: 0.5rem; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+        .ai-text { font-size: 0.8rem; color: var(--brand-red); font-style: italic; }
+        .footer { padding: 1.5rem; text-align: center; font-size: 0.875rem; color: var(--text-secondary); background-color: #ffffff; border-top: 1px solid var(--border-color); }
+
+        .dynamic-banner {
+            background: linear-gradient(135deg, var(--brand-blue) 0%, #123B69 50%, var(--brand-red) 100%); 
+            padding: 3rem 1.5rem; text-align: center; border-radius: 0.75rem; margin-bottom: 2.5rem; position: relative; overflow: hidden;
+            box-shadow: 0 10px 20px -3px rgba(0,0,0,0.15), 0 4px 8px -2px rgba(0,0,0,0.08);
+        }
+        .dynamic-banner-logo { width: 100px; height: auto; margin: 0 auto 1.5rem auto; animation: logoPulse 2.5s infinite ease-in-out; }
+        @keyframes logoPulse { 0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; } 50% { transform: scale(1.08) rotate(5deg); opacity: 1; } }
+        .dynamic-banner h2 { font-size: 2.25rem; font-weight: 800; color: white; margin-bottom: 0.75rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+        .dynamic-banner p { font-size: 1.15rem; color: #E0E7FF; max-width: 750px; margin: 0 auto; }
+        
+        /* Mobile sidebar overlay */
+        #sidebar-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); z-index: 25; display: none; }
+        #sidebar.open ~ #sidebar-overlay { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex flex-col min-h-screen md:flex-row">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex-col md:flex fixed md:sticky top-0 h-screen md:h-auto transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-30 shadow-lg md:shadow-none">
+            <div class="p-5 border-b border-gray-200 flex items-center justify-between md:justify-center">
+                <div class="flex flex-col items-center">
+                    <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" 
+                         alt="St Michael Enterprises Logo" 
+                         class="h-10 mb-2 rounded"
+                         onerror="this.onerror=null; this.src='https://placehold.co/150x40/0A2F5C/FFFFFF?text=SME+Logo&font=inter'; this.classList.add('p-1');">
+                    <h1 class="text-lg font-bold brand-blue-text text-center">AI eLearning</h1>
+                    <p class="text-xs text-gray-500 text-center">U.S. Embassy Islamabad</p>
+                </div>
+                <button id="close-sidebar-btn" class="md:hidden text-gray-600 hover:brand-red-text p-2 rounded-md hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <nav id="main-nav" class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+                <!-- Nav items will be populated by JS -->
+            </nav>
+        </aside>
+        <div id="sidebar-overlay" class="md:hidden"></div>
+
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top bar for mobile -->
+            <header class="md:hidden p-4 bg-brand-blue text-white flex justify-between items-center sticky top-0 z-20 shadow-md">
+                <button id="open-sidebar-btn" class="text-white p-2 rounded-md hover:bg-white/20 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <span class="text-lg font-semibold">AI eLearning Platform</span>
+                <div class="w-8"></div> <!-- Spacer -->
+            </header>
+
+            <main class="flex-1 p-4 sm:p-6 md:p-10 overflow-y-auto bg-gray-100">
+                <!-- Content sections will be injected here by JS -->
+            </main>
+             <footer class="footer">
+                <p>&copy; 2025 St Michael LLC. All Rights Reserved.</p>
+                <p class="mt-1 text-xs">This is a functional prototype developed by St Michael LLC for demonstration purposes only. All data is illustrative.</p>
+            </footer>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const openSidebarBtn = document.getElementById('open-sidebar-btn');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        
+        const mainNav = document.getElementById('main-nav');
+        const mainContentArea = document.querySelector('main'); 
+
+        const brandColors = { blue: '#0A2F5C', red: '#A02040' };
+
+        const navLinks = [
+            { href: "#overview", text: "Dashboard", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>' },
+            { href: "#platform-in-action", text: "AI Platform In Action", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>' },
+            { href: "#core", text: "Core AI Capabilities", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>' },
+            { href: "#learner", text: "AI Learner Journey", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>' },
+            { href: "#admin", text: "AI Admin & Compliance", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>' },
+            { href: "#recommendations", text: "Summary & Recs", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>' },
+            { href: "#about-prototype", text: "About This AI Prototype", icon: '<svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' }
+        ];
+
+        navLinks.forEach(link => {
+            const a = document.createElement('a');
+            a.href = link.href;
+            a.classList.add('nav-item');
+            a.innerHTML = `${link.icon}<span>${link.text}</span>`;
+            mainNav.appendChild(a);
+        });
+        
+        const navItems = mainNav.querySelectorAll('.nav-item'); 
+
+        if (openSidebarBtn) {
+            openSidebarBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('open');
+                sidebarOverlay.style.display = 'block';
+            });
+        }
+        if (closeSidebarBtn) {
+            closeSidebarBtn.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('open');
+                sidebarOverlay.style.display = 'none';
+            });
+        }
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('open');
+            sidebarOverlay.style.display = 'none';
+        });
+        
+        const platformInActionContent = `
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">AI Platform in Action: Functional Model</h2>
+            <p class="text-gray-600 mb-6">Explore conceptual mock-ups demonstrating AI functionalities for a comprehensive, user-friendly, and automated eLearning experience, tailored for the U.S. Embassy Islamabad.</p>
+            <div class="card">
+                <div class="border-b border-gray-200">
+                    <nav class="flex -mb-px overflow-x-auto" id="model-tabs">
+                        <button data-target="student-view" class="tab-btn">Student AI Experience</button>
+                        <button data-target="instructor-view" class="tab-btn">Tutor AI Tools</button>
+                        <button data-target="team-lead-view" class="tab-btn">Team Lead AI Suite</button>
+                        <button data-target="admin-view" class="tab-btn">Admin AI Oversight</button>
+                    </nav>
+                </div>
+                <div class="p-4 md:p-6">
+                    <!-- Student View -->
+                    <div id="student-view" class="tab-content">
+                        <h3 class="card-subtitle mb-4">Student AI-Enhanced Experience</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="card">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="card-title text-base mb-0 pb-0 border-none">AI-Personalized Dashboard</h4>
+                                    <div class="flex items-center">
+                                        <span class="text-xs text-gray-500 mr-2">Jane Doe (Consular Officer)</span>
+                                        <img src="https://placehold.co/40x40/EBF2FA/0A2F5C?text=JD&font=inter" alt="User Avatar" class="w-8 h-8 rounded-full">
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-3">Welcome back, Jane! Here's your AI-curated learning hub.</p>
+                                <div class="mb-4">
+                                    <p class="font-medium text-sm mb-1">AI Recommended Next Lesson:</p>
+                                    <div class="bg-brand-blue-light p-3 rounded-md text-sm brand-blue-text">Urdu: Diplomatic Greetings - Advanced Phrases <button class="btn btn-secondary btn-sm text-xs py-1 px-2 float-right">Start</button></div>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="font-medium text-sm mb-1">FSI Goal Progress (Urdu S-2): <span class="ai-text">AI Tracked</span></p>
+                                    <div class="w-full bg-gray-200 rounded-full h-3"><div class="brand-blue-bg h-3 rounded-full" style="width: 70%;"></div></div>
+                                    <p class="text-xs text-gray-500 mt-1">70% - AI projects S-2 in 7 weeks.</p>
+                                </div>
+                                <button class="btn btn-tertiary w-full text-sm"><span class="text-lg mr-2">🤖</span> Ask AI Language Tutor</button>
+                            </div>
+                            <div class="card">
+                                <h4 class="card-title text-base">AI-Assisted Speaking Practice</h4>
+                                <p class="text-xs text-gray-500 mb-3">Topic: Consular Interview Simulation (Urdu)</p>
+                                <p class="text-sm mb-2">Record your response. AI will provide instant feedback on pronunciation, fluency, and FSI alignment criteria.</p>
+                                <button class="btn btn-primary w-full text-sm mb-2"><span class="text-lg mr-2">🎤</span> Record & Get AI Feedback</button>
+                                <div class="mt-2 p-2 bg-green-50 border border-green-200 rounded-md text-xs text-green-700">
+                                    <span class="font-semibold">AI Feedback Example:</span> "Good fluency! Focus on the 'ق' sound. AI Score: S-1+" <span class="ai-badge">AI</span>
+                                </div>
+                            </div>
+                             <div class="card lg:col-span-2">
+                                <h4 class="card-title text-base">AI-Curated Resource Hub</h4>
+                                <input type="search" placeholder="AI Search: e.g., 'Urdu political terminology'" class="form-input mb-3 text-sm">
+                                <p class="text-xs text-gray-500 mb-1">AI Recommended for you (based on Consular Officer profile):</p>
+                                <div class="bg-gray-100 p-2 rounded text-sm mb-1">📄 Article: "Urdu for Visa Interviews - Key Phrases" <span class="ai-badge">AI</span></div>
+                                <div class="bg-gray-100 p-2 rounded text-sm">🎬 Video: "FSI S-2 Level Consular Role-Play" <span class="ai-badge">AI</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Instructor (Tutor) View -->
+                    <div id="instructor-view" class="tab-content">
+                        <h3 class="card-subtitle mb-4">Tutor AI-Assisted Tools</h3>
+                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="card">
+                                <h4 class="card-title text-base">AI Class Insights <span class="ai-badge">AI</span></h4>
+                                <p class="text-xs text-gray-500 mb-3">Real-time analytics for Urdu Intermediate (Your Class).</p>
+                                <div class="bg-yellow-50 border-yellow-300 p-2 rounded-md text-xs text-yellow-700 mb-2">
+                                    <span class="font-semibold">AI Alert:</span> Student Y needs focus on past tense. <a href="#" class="brand-red-text underline">AI Suggested Drills</a>
+                                </div>
+                                <div class="bg-gray-100 p-2 rounded text-sm">Class Engagement: 88% <span class="ai-text">(AI: Suggest interactive poll for next session)</span></div>
+                            </div>
+                            <div class="card">
+                                <h4 class="card-title text-base">AI-Assisted Grading & Feedback</h4>
+                                 <p class="text-xs text-gray-500 mb-3">Urdu Assignment 3 - Speaking Task (FSI S-1 Target)</p>
+                                 <div class="mb-2 p-2 border rounded-md text-sm">Student Z: <span class="brand-blue-text">AI Pre-Score: S-0+</span>. AI highlights significant pronunciation deviations. <button class="btn btn-secondary btn-sm text-xs py-1 px-2 float-right">Review AI Detailed Feedback</button></div>
+                                 <button class="btn btn-primary w-full text-sm">Access Full Grading Queue (5 Pending)</button>
+                            </div>
+                            <div class="card lg:col-span-2">
+                                <h4 class="card-title text-base">AI Content & Assessment Generation</h4>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-medium text-gray-700 mb-1">AI Lesson Plan Assistant:</label>
+                                    <input type="text" placeholder="Topic: Urdu for Security Personnel, FSI S-1" class="form-input text-sm mb-1">
+                                    <button class="btn btn-tertiary text-sm w-full"><span class="text-lg mr-2">🛠️</span>Generate AI Lesson Outline & Activities</button>
+                                </div>
+                                <p class="ai-text text-xs">AI can generate diverse questions, role-play scenarios tailored to job roles, and adapt existing materials for specific FSI levels.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Lead View -->
+                    <div id="team-lead-view" class="tab-content">
+                        <h3 class="card-subtitle mb-4">Team Leader AI Suite (Syeda Fatima Gilani - QC Lead)</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="card">
+                                <h4 class="card-title text-base">AI Team Performance Dashboard <span class="ai-badge">AI</span></h4>
+                                <p class="text-xs text-gray-500 mb-3">Overview of 4 Tutors & their classes.</p>
+                                <div class="mb-2 p-2 bg-blue-50 border-blue-200 rounded-md text-xs text-blue-700">Avg. FSI Progress (All Classes): +0.3 levels this month. <span class="ai-text">(AI: Tutor B's class shows highest improvement)</span></div>
+                                <div id="teamLeadChartContainer" class="h-48 mt-2"><canvas id="teamLeadPerformanceChart"></canvas></div>
+                                <button class="btn btn-primary w-full text-sm mt-2">View Detailed Tutor Reports</button>
+                            </div>
+                            <div class="card">
+                                <h4 class="card-title text-base">AI Instructor Support & QA</h4>
+                                 <p class="text-xs text-gray-500 mb-3">Automated insights for quality control.</p>
+                                 <div class="mb-2 p-2 border rounded-md text-sm">AI Analysis of Student Feedback: Common request for more 'Consular' role-play scenarios. <button class="btn btn-tertiary btn-sm text-xs py-1 px-2 float-right">Share with Tutors</button></div>
+                                 <div class="mb-2 p-2 border rounded-md text-sm">AI FSI Alignment Check: Tutor A's new module for S-2 is 95% aligned. <span class="text-green-600 font-semibold">OK</span> <span class="ai-badge">AI</span></div>
+                                 <button class="btn btn-secondary w-full text-sm">Schedule AI-Assisted QA Observations</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Admin/COR View -->
+                    <div id="admin-view" class="tab-content">
+                        <h3 class="card-subtitle mb-4">Administrator AI-Driven Oversight</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="card">
+                                <h4 class="card-title text-base">AI Program Health Dashboard <span class="ai-badge">AI</span></h4>
+                                <p class="text-xs text-gray-500 mb-3">Real-time overview of the language program.</p>
+                                <div class="mb-2 p-2 bg-green-50 border-green-200 rounded-md text-xs text-green-700">Overall FSI Goal Achievement: 82% (AI Trend: Positive)</div>
+                                <div class="mb-2 p-2 bg-yellow-50 border-yellow-300 rounded-md text-xs text-yellow-700">AI Resource Forecast: Potential need for 1 additional English instructor in 6 months. <a href="#" class="brand-red-text underline">View Analysis</a></div>
+                                <div id="adminChartContainer" class="h-40 mt-2"><canvas id="adminProgramChart"></canvas></div>
+                            </div>
+                             <div class="card">
+                                <h4 class="card-title text-base">Automated Stakeholder Reporting <span class="ai-badge">AI</span></h4>
+                                <p class="text-xs text-gray-500 mb-3">Generate and schedule reports for COR & Embassy Leadership.</p>
+                                <select class="form-input text-sm mb-2"><option>Monthly FSI Progress Report (AI Summary)</option><option>Quarterly Resource Utilization (AI Analysis)</option><option>Biannual Student Needs Survey (AI Compiled)</option></select>
+                                <button class="btn btn-primary w-full text-sm"><span class="text-lg mr-2">📤</span>Generate & Schedule Report</button>
+                                <p class="ai-text text-xs mt-2">AI drafts reports, highlights key metrics, and visualizes data for easy comprehension by all stakeholders.</p>
+                            </div>
+                             <div class="card lg:col-span-2">
+                                <h4 class="card-title text-base">AI-Powered Compliance & QA</h4>
+                                <div class="text-sm space-y-2">
+                                    <div><span class="font-medium">WCAG 2.1 AA Check:</span> <span class="text-green-600">99.5% Compliant</span> (AI Scan: Daily) <span class="ai-badge">AI</span></div>
+                                    <div><span class="font-medium">FSI Material Alignment:</span> <span class="text-green-600">Automated Audit Passed</span> <span class="ai-badge">AI</span></div>
+                                    <div><span class="font-medium">Urdu Script Integrity:</span> <span class="text-green-600">No Issues Detected</span> (AI Content Scan) <span class="ai-badge">AI</span></div>
+                                </div>
+                                <button class="btn btn-secondary w-full mt-3 text-sm">View Full AI Compliance Dashboard</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        
+        const sectionsContent = {
+            overview: `
+                <div class="dynamic-banner">
+                    <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" alt="St Michael Enterprises Logo" class="dynamic-banner-logo" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FFFFFF/0A2F5C?text=SME&font=inter';">
+                    <h2>St Michael LLC: AI-Powered Language Solutions</h2>
+                    <p>Revolutionizing language instruction for the U.S. Embassy Islamabad with intelligent automation, personalized learning, and comprehensive stakeholder engagement.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6 border-l-4 border-brand-blue">
+                    <p class="text-sm md:text-base brand-blue-text"><strong>Welcome to the AI-Powered eLearning Platform Prototype by St Michael LLC.</strong><br>This interactive model demonstrates our advanced, AI-driven, user-friendly, and efficient methodology, tailored to automate and enhance language instruction for the U.S. Embassy Islamabad, as outlined in RFQ 19PK33-25-Q-7039.</p>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4 mt-8">Platform Pillars: AI-Driven Excellence</h2>
+                <p class="text-gray-600 mb-8">Our solution is built on intelligent systems designed to maximize learning outcomes and operational efficiency.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card"><h3 class="card-subtitle mb-2 flex items-center"><span class="text-2xl mr-2">🧠</span>AI-Personalized Learning</h3><p class="text-gray-600 text-sm">Adaptive learning paths, AI-generated content variations, and FSI-aligned assessments tailored to individual student needs and proficiency goals.</p></div>
+                    <div class="card"><h3 class="card-subtitle mb-2 flex items-center"><span class="text-2xl mr-2">📊</span>Automated Reporting & Analytics</h3><p class="text-gray-600 text-sm">AI-driven insights for all stakeholders, automating progress tracking, at-risk student identification, and program effectiveness reports with predictive capabilities.</p></div>
+                    <div class="card"><h3 class="card-subtitle mb-2 flex items-center"><span class="text-2xl mr-2">🤝</span>Intelligent Stakeholder Engagement</h3><p class="text-gray-600 text-sm">Automated, role-based notifications, customizable dashboards, and AI-summarized reports to keep all parties informed and actively engaged.</p></div>
+                </div>
+                <div class="mt-10 card">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Explore Our AI-Driven Solution</h3>
+                    <p class="text-gray-600 mb-6">This prototype showcases how St Michael LLC's AI-powered platform addresses the core requirements of the RFP, offering an intelligent, automated, and highly effective language training solution. Navigate through the sections to see conceptual demonstrations of its capabilities.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#platform-in-action" class="linked-btn btn btn-secondary"><span class="text-xl mr-2">🚀</span>View AI Platform Model</a>
+                    </div>
+                </div>`,
+            "platform-in-action": platformInActionContent, // Using the detailed content from above
+            core: `<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Core AI Capabilities</h2><p class="text-gray-600 mb-6">Foundational features enhanced by AI, aligned with RFQ 19PK33-25-Q-7039.</p><div class="card"><div class="border-b border-gray-200"><nav class="flex -mb-px overflow-x-auto" id="core-tabs"><button data-target="virtual-classroom-core" class="tab-btn">AI Virtual Classroom</button><button data-target="content-management-core" class="tab-btn">Intelligent Content</button><button data-target="resource-library-core" class="tab-btn">Smart Resource Hub</button></nav></div><div class="p-4 md:p-6"><div id="virtual-classroom-core" class="tab-content"><h3 class="card-subtitle mb-2">AI-Integrated Virtual Classroom</h3><p class="text-sm text-gray-700">Features AI real-time transcription, translation, engagement analytics, and automated summaries. Integrates with TEAMS, Zoom, etc.</p></div><div id="content-management-core" class="tab-content"><h3 class="card-subtitle mb-2">Intelligent Content Lifecycle</h3><p class="text-sm text-gray-700">AI assists content creation, FSI alignment, Urdu script support (InPage), and automated approval workflows.</p></div><div id="resource-library-core" class="tab-content"><h3 class="card-subtitle mb-2">AI-Curated Smart Resource Hub</h3><p class="text-sm text-gray-700">AI-powered semantic search, personalized recommendations, and automated tagging of multilingual resources.</p></div></div></div>`,
+            learner: `<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">AI-Driven Learner Journey</h2><p class="text-gray-600 mb-6">Personalized and adaptive learning experiences.</p><div class="card"><div class="border-b border-gray-200"><nav class="flex -mb-px overflow-x-auto" id="learner-tabs"><button data-target="assessment-learner" class="tab-btn">AI Assessment</button><button data-target="progress-learner" class="tab-btn">AI Personalization</button><button data-target="support-learner" class="tab-btn">Intelligent Support</button></nav></div><div class="p-4 md:p-6"><div id="assessment-learner" class="tab-content"><h3 class="card-subtitle mb-2">AI-Powered Assessment & Evaluation</h3><p class="text-sm text-gray-700">AI-assisted grading, instant feedback, FSI/ILR alignment, diverse question types including audio/video.</p><div class="chart-container mt-4"><canvas id="assessmentChart"></canvas></div></div><div id="progress-learner" class="tab-content"><h3 class="card-subtitle mb-2">Adaptive Learning with AI</h3><p class="text-sm text-gray-700">AI creates personalized plans, suggests content, and uses predictive analytics for progress forecasting.</p></div><div id="support-learner" class="tab-content"><h3 class="card-subtitle mb-2">AI-Enhanced Counseling & Support</h3><p class="text-sm text-gray-700">AI identifies at-risk students, assists counseling documentation, and provides an AI tutor.</p></div></div></div>`,
+            admin: `<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">AI-Automated Administration & Compliance</h2><p class="text-gray-600 mb-6">Streamlined oversight and reporting.</p><div class="card"><div class="border-b border-gray-200"><nav class="flex -mb-px overflow-x-auto" id="admin-tabs"><button data-target="reporting-admin" class="tab-btn">AI Reporting</button><button data-target="accessibility-admin" class="tab-btn">Automated Compliance</button><button data-target="inclusivity-admin" class="tab-btn">AI for Inclusivity</button></nav></div><div class="p-4 md:p-6"><div id="reporting-admin" class="tab-content"><h3 class="card-subtitle mb-2">Intelligent Reporting & Analytics</h3><p class="text-sm text-gray-700">AI generates customizable reports for COR and stakeholders, including automated summaries and predictive insights.</p></div><div id="accessibility-admin" class="tab-content"><h3 class="card-subtitle mb-2">AI-Driven Accessibility & Compliance</h3><p class="text-sm text-gray-700">AI monitors WCAG 2.1 AA compliance, Urdu script rendering, and provides audit trails.</p></div><div id="inclusivity-admin" class="tab-content"><h3 class="card-subtitle mb-2">AI to Support Inclusive Curriculum</h3><p class="text-sm text-gray-700">AI assists in suggesting diverse cultural examples and analyzing content for potential biases.</p></div></div></div>`,
+            recommendations: `<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Summary & Recommendations for an AI-Powered Future</h2><p class="text-gray-600 mb-6">St Michael LLC proposes an AI-first approach.</p><div class="card"><h3 class="card-subtitle mb-2">Key Recommendations</h3><ul class="list-disc list-inside space-y-2 text-sm text-gray-700"><li>Embrace Full-Spectrum AI Integration for maximum efficiency.</li><li>Prioritize Explainable AI (XAI) for transparency.</li><li>Focus on Continuous AI Model Improvement via feedback.</li><li>Ensure Data Security & Privacy in AI systems.</li><li>Invest in AI Literacy for all staff.</li></ul></div>`,
+            "about-prototype": `
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">About St Michael LLC's AI-Powered eLearning Prototype</h2>
+                <div class="about-section-card">
+                    <p class="mb-4">This interactive application is a functional prototype developed by <strong>St Michael LLC</strong>, a certified Service-Disabled Veteran-Owned Small Business (SDVOSB) (SAM UEI: KC57D8EHLZ39, CAGE: 9MT36). It demonstrates our proposed cutting-edge, AI-powered eLearning solution, meticulously designed to automate, personalize, and elevate language instruction for the <strong>U.S. Embassy Islamabad</strong>, in direct response to RFQ 19PK33-25-Q-7039.</p>
+                    <p>Our vision is an intelligent platform that leverages our core competencies in AI & Big Data Analytics and IT Solutions to meet all RFP requirements, anticipate needs, optimize learning outcomes, and provide unparalleled efficiency and engagement for all stakeholders.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="about-section-card">
+                        <h3>Our AI-First Approach to Language Training</h3>
+                        <p>St Michael LLC's methodology integrates Artificial Intelligence at every level, transforming traditional language instruction into a dynamic, adaptive, and highly efficient experience for the U.S. Embassy. This includes intelligent automation, personalized learning paths, predictive analytics, enhanced engagement through AI tutors, and streamlined stakeholder reporting, all aligned with FSI standards.</p>
+                    </div>
+                    <div class="about-section-card">
+                        <h3>St Michael LLC: Your Proven Partner for Mission Success</h3>
+                        <p>St Michael LLC is dedicated to delivering high-impact solutions. Our expertise includes Information Technology Services (SaaS, IT Infrastructure), AI & Big Data Analytics, Professional and Management Development Training (NAICS 611430), and Monitoring & Evaluation. Our leadership team, including CEO Ryan Hoek, has extensive experience in U.S. Government projects, ensuring quality, innovation, and compliance (FAR, DFAR).</p>
+                        <p class="mt-2">We are committed to providing a low-risk, fully compliant solution, operationally ready within 30 days of award, as detailed in our Technical Proposal.</p>
+                    </div>
+                </div>
+                 <div class="about-section-card mt-6">
+                    <h3>Next Steps & Contact Information</h3>
+                    <p>We are confident that St Michael LLC's AI-powered eLearning platform offers a transformative solution. For inquiries, please contact <strong>Sana Rehman, VP-Resources (Project Manager)</strong>, at <a href="mailto:sana@stmichaelenterprises.com" class="brand-blue-text hover:underline font-semibold">sana@stmichaelenterprises.com</a> or +1 (615) 626-1954. Visit <a href="http://www.stmichaelenterprises.com" target="_blank" class="brand-blue-text hover:underline font-semibold">www.stmichaelenterprises.com</a>.</p>
+                </div>`
+        };
+
+        Object.keys(sectionsContent).forEach(id => {
+            const div = document.createElement('div');
+            div.id = id;
+            div.classList.add('content-section');
+            div.innerHTML = sectionsContent[id];
+            mainContentArea.appendChild(div);
+        });
+        
+        const contentSectionElements = mainContentArea.querySelectorAll('.content-section');
+        
+        function switchView(hash) {
+            hash = hash || '#overview'; 
+            if (window.innerWidth < 768 && sidebar.classList.contains('open')) {
+                 sidebar.classList.add('-translate-x-full'); 
+                 sidebar.classList.remove('open');
+                 sidebarOverlay.style.display = 'none';
+            }
+
+            navItems.forEach(item => item.classList.toggle('active', item.getAttribute('href') === hash));
+            contentSectionElements.forEach(section => section.classList.toggle('active', '#' + section.id === hash));
+            
+            if (hash === '#core') setupTabs('core-tabs', 'core');
+            else if (hash === '#learner') { setupTabs('learner-tabs', 'learner'); renderAssessmentChart(); }
+            else if (hash === '#admin') setupTabs('admin-tabs', 'admin');
+            else if (hash === '#platform-in-action') setupTabs('model-tabs', 'platform-in-action');
+        }
+
+        function setupTabs(tabContainerId, contentPrefixOrSectionId) {
+            const tabContainer = document.getElementById(tabContainerId);
+            if (!tabContainer) return;
+            
+            const isModelTabs = tabContainerId === 'model-tabs';
+            const targetContentSelector = isModelTabs ? `#platform-in-action .tab-content` : `#${contentPrefixOrSectionId} .tab-content`;
+            const tabContents = document.querySelectorAll(targetContentSelector);
+
+            if (tabContainer.dataset.initializedTabs === contentPrefixOrSectionId && tabContainer.querySelector('.tab-btn.active')) {
+                const activeBtn = tabContainer.querySelector('.tab-btn.active');
+                if(activeBtn) {
+                    const targetId = activeBtn.dataset.target;
+                    tabContents.forEach(content => content.classList.toggle('active', content.id === targetId));
+                }
+                return;
+            }
+
+            const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+            
+            function switchTab(targetId) {
+                tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.target === targetId));
+                tabContents.forEach(content => content.classList.toggle('active', content.id === targetId));
+                 if (targetId === 'admin-view' && document.getElementById('adminProgramChart')) {
+                    renderAdminProgramChart(); 
+                }
+                if (targetId === 'team-lead-view' && document.getElementById('teamLeadPerformanceChart')) {
+                    renderTeamLeadPerformanceChart();
+                }
+            }
+
+            tabContainer.addEventListener('click', (e) => {
+                const tabButton = e.target.closest('.tab-btn');
+                if (tabButton) {
+                    switchTab(tabButton.dataset.target);
+                }
+            });
+            
+            if (tabButtons.length > 0 && !tabContainer.querySelector('.tab-btn.active')) {
+                 switchTab(tabButtons[0].dataset.target);
+            }
+            tabContainer.dataset.initializedTabs = contentPrefixOrSectionId;
+        }
+
+        mainNav.addEventListener('click', (e) => {
+            const navLink = e.target.closest('a.nav-item');
+            if (navLink) {
+                e.preventDefault();
+                const hash = navLink.getAttribute('href');
+                history.pushState(null, null, hash);
+                switchView(hash);
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.style.display = 'none';
+                }
+            }
+        });
+        
+        mainContentArea.addEventListener('click', (e) => {
+            const linkedBtn = e.target.closest('.linked-btn');
+            if(linkedBtn) {
+                e.preventDefault();
+                const hash = linkedBtn.getAttribute('href');
+                history.pushState(null, null, hash);
+                switchView(hash);
+            }
+        });
+
+        window.addEventListener('popstate', () => switchView(location.hash));
+        switchView(location.hash || '#overview'); 
+
+        let assessmentChartInstance = null;
+        function renderAssessmentChart() {
+            const chartCanvas = document.getElementById('assessmentChart');
+            if (!chartCanvas || !document.getElementById('learner').classList.contains('active')) return; 
+            
+            if (assessmentChartInstance) assessmentChartInstance.destroy(); 
+
+            assessmentChartInstance = new Chart(chartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ['Baseline Testing (AI Analyzed)', 'Progress Monitoring (AI Insights)', 'Proficiency Evaluation (FSI Aligned)', 'Supplemental Needs (AI Identified)'],
+                    datasets: [{
+                        label: 'Assessment Focus',
+                        data: [80, 95, 85, 70],
+                        backgroundColor: [ brandColors.blue, brandColors.red, '#A5B4FC', '#FCA5A5'],
+                        borderColor: [ brandColors.blue, brandColors.red, '#6366F1', '#EF4444'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'Key Assessment Areas (AI-Enhanced)', font: { size: 14, weight: '600' }, color: '#333' },
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label || ''}: ${ctx.parsed.y}% - ${ {0:"AI analyzes initial proficiency for personalized path.",1:"AI tracks real-time progress, highlighting strengths/weaknesses.", 2:"FSI-aligned evaluation with AI-assisted scoring.",3:"AI identifies specific areas needing targeted remedial content."}[ctx.dataIndex] || ''}` } }
+                    },
+                    scales: { y: { beginAtZero: true, grid: { color: '#e5e7eb' }, ticks: { display: false } },
+                              x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#4b5563', autoSkip: false, maxRotation: 30, minRotation: 0, callback: function(value) { const label = this.getLabelForValue(value); return label.length > 22 ? label.substring(0,20)+'...' : label; } } }
+                    }
+                }
+            });
+        }
+        
+        let adminChartInstance = null;
+        function renderAdminProgramChart() {
+            const adminChartCanvas = document.getElementById('adminProgramChart');
+            const adminViewTab = document.getElementById('admin-view');
+            if (!adminChartCanvas || !adminViewTab || !adminViewTab.classList.contains('active')) return;
+
+            if (adminChartInstance) adminChartInstance.destroy();
+
+            adminChartInstance = new Chart(adminChartCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['FSI Goal Met', 'In Progress', 'At Risk (AI Flagged)'],
+                    datasets: [{
+                        label: 'Program Health',
+                        data: [70, 20, 10], 
+                        backgroundColor: [brandColors.blue, '#A5B4FC', brandColors.red],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: {size: 10}, boxWidth:15 } },
+                        title: { display: true, text: 'AI Program Health Overview', font: {size: 12, weight: '600'}, color: '#333'}
+                    }
+                }
+            });
+        }
+
+        let teamLeadChartInstance = null;
+        function renderTeamLeadPerformanceChart() {
+            const teamLeadChartCanvas = document.getElementById('teamLeadPerformanceChart');
+            const teamLeadViewTab = document.getElementById('team-lead-view');
+             if (!teamLeadChartCanvas || !teamLeadViewTab || !teamLeadViewTab.classList.contains('active')) return;
+
+            if (teamLeadChartInstance) teamLeadChartInstance.destroy();
+            teamLeadChartInstance = new Chart(teamLeadChartCanvas, {
+                type: 'line',
+                data: {
+                    labels: ['Tutor 1', 'Tutor 2', 'Tutor 3', 'Tutor 4'],
+                    datasets: [{
+                        label: 'Avg. Student FSI Progress',
+                        data: [0.4, 0.5, 0.3, 0.45], // Example data: avg FSI level gain
+                        borderColor: brandColors.blue,
+                        backgroundColor: 'rgba(10, 47, 92, 0.1)',
+                        fill: true,
+                        tension: 0.1
+                    }, {
+                        label: 'Avg. Student Engagement (AI Score)',
+                        data: [85, 90, 78, 88], // Example AI engagement score
+                        borderColor: brandColors.red,
+                        backgroundColor: 'rgba(160, 32, 64, 0.1)',
+                        fill: true,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: {font: {size: 10}, boxWidth: 15}}, title: {display: true, text: 'Tutor Team Performance Snapshot (AI Insights)', font: {size: 12, weight: '600'}}},
+                    scales: { y: { beginAtZero: true, ticks: {font: {size:10}} }, x: { ticks: {font: {size:10}} }}
+                }
+            });
+        }
+
+
+    });
+</script>
+
+</body>
+</html>

@@ -21,12 +21,65 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ===============================================================================
-ADDITIONAL NOTICES
+ADDITIONAL NOTICES AND DISCLAIMERS
 ===============================================================================
 
-This software is designed for government and educational use with security 
-and compliance features. Users are responsible for ensuring compliance with 
-all applicable laws and regulations.
+This software includes components and models from various open source projects.
+Each component is subject to its own license terms. Please refer to the 
+individual component licenses for more information.
 
-For commercial support and licensing inquiries, contact:
-Quartermasters FZC - support@quartermasters.me
+AI Models and Training Data:
+- This software may include or reference pre-trained AI models that are 
+  subject to their own licensing terms and conditions.
+- Users are responsible for ensuring compliance with all applicable licenses
+  when using AI models and training data.
+
+Government Use:
+- This software has been developed to meet government requirements and
+  security standards including FISMA and FedRAMP compliance frameworks.
+- Government entities may use this software in accordance with their
+  procurement and usage policies.
+
+Export Control:
+- This software may be subject to export control laws and regulations.
+- Users are responsible for ensuring compliance with all applicable export
+  control requirements.
+
+Third-Party Dependencies:
+- This software includes various open source dependencies, each governed by
+  their respective licenses. See package.json, requirements.txt, and other
+  dependency files for specific component licenses.
+
+Data Privacy:
+- This software is designed to handle potentially sensitive educational and
+  personal data. Users must ensure compliance with applicable data protection
+  laws and regulations including GDPR, CCPA, and other privacy frameworks.
+
+Security:
+- While this software implements security best practices and compliance
+  frameworks, users are responsible for conducting their own security
+  assessments and implementing additional security measures as needed.
+
+Support:
+- This software is provided as-is. Commercial support is available through
+  Quartermasters FZC. Please contact support@quartermasters.me for more
+  information.
+
+===============================================================================
+ATTRIBUTION
+===============================================================================
+
+If you use this software in your research or project, please consider citing:
+
+AI-Powered eLearning Platform
+Quartermasters FZC (2024)
+https://github.com/quartermasters-fzc/ai-elearning-platform
+
+===============================================================================
+CONTACT
+===============================================================================
+
+For questions about licensing, commercial use, or support:
+- Email: legal@quartermasters.me
+- Website: https://quartermasters.me
+- Support: support@quartermasters.me

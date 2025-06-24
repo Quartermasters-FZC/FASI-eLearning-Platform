@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Michael LLC - AI Embassy Project Platform</title>
+    <link rel="icon" type="image/png" href="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #db2777 100%);
+        }
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .ai-pulse {
+            animation: ai-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes ai-pulse {
+            0%, 100% { background: rgb(59, 130, 246); }
+            50% { background: rgb(139, 92, 246); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Landing Page -->
+    <div id="landingPage" class="min-h-screen">
+        <!-- Header -->
+        <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" 
+                             alt="St Michael LLC" class="h-10 w-auto mr-3">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">St Michael LLC</h1>
+                            <p class="text-xs text-gray-600">AI-Powered Construction Solutions</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button onclick="showPage('about')" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">About</button>
+                        <button onclick="showPage('disclaimer')" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Disclaimer</button>
+                        <button onclick="showPage('platform')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">Enter Platform</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="pt-16 gradient-bg text-white min-h-screen flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="slide-in">
+                        <h1 class="text-5xl font-bold mb-6">
+                            Revolutionary AI-Powered
+                            <span class="text-yellow-300">Embassy Project Delivery</span>
+                        </h1>
+                        <p class="text-xl mb-8 text-blue-100">
+                            Demonstrating next-generation construction management for the US Embassy Islamabad restoration project. 
+                            Experience 83% cost reduction and 95% compliance accuracy through intelligent automation.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="showPage('platform')" class="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors pulse-glow">
+                                Explore AI Platform
+                            </button>
+                            <button onclick="showPage('demo')" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition-colors">
+                                View Live Demo
+                            </button>
+                        </div>
+                        <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+                            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                                <div class="text-2xl font-bold text-yellow-300">83%</div>
+                                <div class="text-sm">Cost Reduction</div>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                                <div class="text-2xl font-bold text-green-300">95%</div>
+                                <div class="text-sm">Compliance Accuracy</div>
+                            </div>
+                            <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                                <div class="text-2xl font-bold text-blue-300">20%</div>
+                                <div class="text-sm">Faster Delivery</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-animation">
+                        <div class="relative">
+                            <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" 
+                                 alt="St Michael Logo" class="w-96 h-96 mx-auto opacity-20">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="w-20 h-20 ai-pulse rounded-full mx-auto mb-4 flex items-center justify-center">
+                                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-2xl font-bold mb-2">AI-Powered Intelligence</h3>
+                                    <p class="text-blue-200">Real-time project optimization</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prototype Notice -->
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div class="max-w-7xl mx-auto flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-yellow-700">
+                        <strong>Prototype Demonstration:</strong> This is a technology demonstration by St Michael LLC showcasing our AI-powered project delivery methodology for the US Embassy Islamabad restoration project (RFQ 19PK3325Q7053).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="aboutPage" class="hidden min-h-screen pt-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" 
+                     alt="St Michael LLC" class="h-20 w-auto mx-auto mb-4">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">About St Michael LLC</h1>
+                <p class="text-xl text-gray-600">Pioneering the future of construction through artificial intelligence</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+                    <p class="text-gray-600">
+                        To revolutionize construction project delivery through cutting-edge AI technology, 
+                        ensuring exceptional quality, efficiency, and compliance for high-security diplomatic facilities.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
+                    <p class="text-gray-600">
+                        To become the global leader in AI-powered construction management, setting new standards 
+                        for project delivery in the diplomatic and government sectors.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Technology Innovation</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">AI Automation</h4>
+                        <p class="text-sm text-gray-600">Automated project management and compliance monitoring</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">eLearning Platform</h4>
+                        <p class="text-sm text-gray-600">AI-powered training and workforce development</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">Predictive Analytics</h4>
+                        <p class="text-sm text-gray-600">Advanced forecasting and risk management</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="showPage('landing')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disclaimer Page -->
+    <div id="disclaimerPage" class="hidden min-h-screen pt-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Legal Disclaimer</h1>
+            
+            <div class="bg-white p-8 rounded-lg shadow-lg space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Prototype Demonstration</h3>
+                    <p class="text-gray-600">
+                        This platform is a technology demonstration prototype developed by St Michael LLC to showcase 
+                        our AI-powered project delivery methodology for the US Embassy Islamabad restoration project 
+                        (RFQ 19PK3325Q7053). This is not a live production system.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Intellectual Property</h3>
+                    <p class="text-gray-600">
+                        All content, designs, algorithms, and methodologies presented in this platform are proprietary 
+                        to St Michael LLC. Unauthorized reproduction or use is strictly prohibited.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Security and Compliance</h3>
+                    <p class="text-gray-600">
+                        While this demonstration showcases our security and compliance capabilities, actual implementation 
+                        would require full security clearances and approval from relevant US Embassy security personnel.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Technology Limitations</h3>
+                    <p class="text-gray-600">
+                        AI automation capabilities shown are based on current technology projections and our proprietary 
+                        algorithms. Actual performance may vary based on project-specific requirements and conditions.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Contact Information</h3>
+                    <p class="text-gray-600">
+                        For inquiries about our AI platform or construction services, please contact St Michael LLC 
+                        through official channels. This demonstration does not constitute a binding offer or contract.
+                    </p>
+                </div>
+
+                <div class="border-t pt-6">
+                    <p class="text-sm text-gray-500">
+                        © 2025 St Michael LLC. All rights reserved. This demonstration is provided for evaluation purposes only.
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="showPage('landing')" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Platform -->
+    <div id="platformPage" class="hidden">
+        <!-- Enhanced Header -->
+        <header class="bg-white shadow-lg border-b-2 border-blue-600">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" 
+                             alt="St Michael LLC" class="h-10 w-auto">
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">St Michael AI Platform</h1>
+                            <p class="text-xs text-gray-600">Embassy Restoration Project • RFQ 19PK3325Q7053</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                            AI Status: Active
+                        </div>
+                        <div id="realTimeUpdate" class="text-sm text-gray-600">
+                            Last Update: Loading...
+                        </div>
+                        <button onclick="showPage('landing')" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                            Exit Platform
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex gap-6">
+                <!-- Enhanced Sidebar -->
+                <div class="w-64 bg-white rounded-xl shadow-lg border p-6">
+                    <nav class="space-y-2">
+                        <button onclick="setActiveTab('dashboard')" id="tab-dashboard" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all bg-blue-100 text-blue-700">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                            </svg>
+                            <span>AI Dashboard</span>
+                        </button>
+                        <button onclick="setActiveTab('stakeholders')" id="tab-stakeholders" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all text-gray-700 hover:bg-gray-100">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                            </svg>
+                            <span>Stakeholders</span>
+                        </button>
+                        <button onclick="setActiveTab('ai-automation')" id="tab-ai-automation" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all text-gray-700 hover:bg-gray-100">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>AI Automation</span>
+                        </button>
+                        <button onclick="setActiveTab('learning')" id="tab-learning" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all text-gray-700 hover:bg-gray-100">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            <span>eLearning Hub</span>
+                        </button>
+                        <button onclick="setActiveTab('reporting')" id="tab-reporting" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all text-gray-700 hover:bg-gray-100">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                            <span>Smart Reports</span>
+                        </button>
+                        <button onclick="setActiveTab('compliance')" id="tab-compliance" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all text-gray-700 hover:bg-gray-100">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Compliance AI</span>
+                        </button>
+                    </nav>
+
+                    <!-- AI Status Widget -->
+                    <div class="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border">
+                        <h4 class="font-semibold text-gray-800 mb-2">AI System Status</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>Processing Power</span>
+                                <span class="text-green-600 font-medium">98%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Learning Rate</span>
+                                <span class="text-blue-600 font-medium">Active</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Automation Level</span>
+                                <span class="text-purple-600 font-medium">Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="flex-1">
+                    <!-- Dashboard Content -->
+                    <div id="content-dashboard" class="tab-content">
+                        <!-- Real-time KPI Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Project Progress</p>
+                                        <p class="text-3xl font-bold text-blue-600" id="projectProgress">34%</p>
+                                        <p class="text-xs text-green-600">+2.5% today</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm text-gray-600">AI Efficiency</p>
+                                        <p class="text-3xl font-bold text-green-600">96%</p>
+                                        <p class="text-xs text-green-600">Optimal</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center ai-pulse">
+                                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-orange-500 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Days Remaining</p>
+                                        <p class="text-3xl font-bold text-orange-600" id="daysRemaining">92</p>
+                                        <p class="text-xs text-gray-600">On schedule</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-purple-500 hover:shadow-xl transition-shadow">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-sm text-gray-600">Cost Efficiency</p>
+                                        <p class="text-3xl font-bold text-purple-600">83%</p>
+                                        <p class="text-xs text-green-600">Under budget</p>
+                                    </div>
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Recommendations Panel -->
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border-2 border-blue-200 mb-8">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center">
+                                <div class="w-6 h-6 ai-pulse rounded-full mr-3"></div>
+                                AI Intelligence Center
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div id="aiRecommendations" class="space-y-3">
+                                    <div class="flex items-start space-x-3 p-3 bg-white rounded-lg shadow-sm border-l-4 border-blue-500">
+                                        <div class="w-6 h-6 ai-pulse rounded-full flex-shrink-0 mt-1"></div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800 font-medium">Weather forecast shows rain in 2 days - reschedule exterior painting</p>
+                                            <p class="text-xs text-gray-600 mt-1">AI Confidence: 95%</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3 p-3 bg-white rounded-lg shadow-sm border-l-4 border-green-500">
+                                        <div class="w-6 h-6 ai-pulse rounded-full flex-shrink-0 mt-1"></div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-800 font-medium">Material delivery optimization identified - 12% cost savings possible</p>
+                                            <p class="text-xs text-gray-600 mt-1">AI Confidence: 92%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow-sm">
+                                    <h4 class="font-medium mb-3">Predictive Insights</h4>
+                                    <canvas id="predictionChart" width="300" height="150"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Timeline with Progress -->
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <h3 class="text-lg font-semibold mb-6">Real-Time Project Timeline</h3>
+                            <div id="projectTimeline" class="space-y-4">
+                                <!-- Timeline content will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other content sections (hidden by default) -->
+                    <div id="content-stakeholders" class="tab-content hidden">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Stakeholder Management Hub</h3>
+                            <p class="text-center text-gray-600">Advanced stakeholder engagement and communication tools</p>
+                        </div>
+                    </div>
+
+                    <div id="content-ai-automation" class="tab-content hidden">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">AI Automation Center</h3>
+                            <p class="text-center text-gray-600">Intelligent automation and process optimization</p>
+                        </div>
+                    </div>
+
+                    <div id="content-learning" class="tab-content hidden">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">eLearning Platform</h3>
+                            <p class="text-center text-gray-600">AI-powered training and workforce development</p>
+                        </div>
+                    </div>
+
+                    <div id="content-reporting" class="tab-content hidden">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Smart Reporting</h3>
+                            <p class="text-center text-gray-600">Automated reports and analytics dashboard</p>
+                        </div>
+                    </div>
+
+                    <div id="content-compliance" class="tab-content hidden">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">Compliance Management</h3>
+                            <p class="text-center text-gray-600">Real-time compliance monitoring and automated reporting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                        <img src="https://stmichaelenterprises.com/wp-content/uploads/2025/04/cropped-St-Michael-Enterprises-Logo-2.png" 
+                             alt="St Michael LLC" class="h-8 w-auto">
+                        <div>
+                            <p class="font-semibold">St Michael LLC</p>
+                            <p class="text-sm text-gray-400">Engineering the Future of Construction</p>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <p class="text-sm text-gray-400">© 2025 St Michael LLC. All rights reserved.</p>
+                        <p class="text-xs text-gray-500 mt-1">AI-Powered Construction Technology Platform</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTab = 'dashboard';
+
+        // Page navigation
+        function showPage(pageName) {
+            const pages = ['landingPage', 'aboutPage', 'disclaimerPage', 'platformPage'];
+            pages.forEach(page => {
+                document.getElementById(page).classList.add('hidden');
+            });
+            
+            if (pageName === 'landing') {
+                document.getElementById('landingPage').classList.remove('hidden');
+            } else if (pageName === 'about') {
+                document.getElementById('aboutPage').classList.remove('hidden');
+            } else if (pageName === 'disclaimer') {
+                document.getElementById('disclaimerPage').classList.remove('hidden');
+            } else if (pageName === 'platform' || pageName === 'demo') {
+                document.getElementById('platformPage').classList.remove('hidden');
+                setActiveTab('dashboard');
+            }
+        }
+
+        // Tab navigation
+        function setActiveTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('text-gray-700', 'hover:bg-gray-100');
+            });
+            
+            const activeBtn = document.getElementById('tab-' + tabName);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-blue-100', 'text-blue-700');
+                activeBtn.classList.remove('text-gray-700', 'hover:bg-gray-100');
+            }
+            
+            // Show/hide content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            const activeContent = document.getElementById('content-' + tabName);
+            if (activeContent) {
+                activeContent.classList.remove('hidden');
+            }
+            
+            // Load specific content
+            if (tabName === 'dashboard') {
+                loadDashboardContent();
+            }
+        }
+
+        // Load dashboard content
+        function loadDashboardContent() {
+            // Load project timeline
+            const timelineContainer = document.getElementById('projectTimeline');
+            if (timelineContainer) {
+                const tasks = [
+                    { id: 1, task: "Site Visit & Assessment", status: "completed", progress: 100, assignee: "Field Team A" },
+                    { id: 2, task: "Drawings & Details", status: "in-progress", progress: 75, assignee: "Design Team" },
+                    { id: 3, task: "Surface Preparation", status: "in-progress", progress: 25, assignee: "Construction Team" },
+                    { id: 4, task: "Roof Repairs", status: "pending", progress: 0, assignee: "Roofing Specialists" }
+                ];
+                
+                timelineContainer.innerHTML = tasks.map(task => `
+                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg border hover:shadow-md transition-shadow">
+                        <div class="w-4 h-4 rounded-full ${task.status === 'completed' ? 'bg-green-500' : task.status === 'in-progress' ? 'bg-blue-500' : 'bg-gray-300'}"></div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">${task.task}</h4>
+                            <p class="text-sm text-gray-600">Assigned to: ${task.assignee}</p>
+                        </div>
+                        <div class="w-32">
+                            <div class="bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: ${task.progress}%"></div>
+                            </div>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">${task.progress}%</span>
+                    </div>
+                `).join('');
+            }
+
+            // Create prediction chart
+            setTimeout(() => {
+                const ctx = document.getElementById('predictionChart');
+                if (ctx && typeof Chart !== 'undefined') {
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                            datasets: [{
+                                label: 'Predicted Progress',
+                                data: [15, 28, 42, 58],
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100
+                                }
+                            }
+                        }
+                    });
+                }
+            }, 500);
+        }
+
+        // Real-time updates
+        function updateRealTimeData() {
+            const timeElement = document.getElementById('realTimeUpdate');
+            if (timeElement) {
+                const now = new Date();
+                timeElement.textContent = 'Last Update: ' + now.toLocaleTimeString();
+            }
+        }
+
+        // Initialize platform
+        function initializePlatform() {
+            setActiveTab('dashboard');
+            updateRealTimeData();
+            setInterval(updateRealTimeData, 30000);
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePlatform();
+        });
+    </script>
+</body>
+</html>
