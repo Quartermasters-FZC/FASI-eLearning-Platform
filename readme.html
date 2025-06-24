@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diplomatic Language Platform - Advanced Cultural & Language Training</title>
+    
+    <!-- Essential Meta Tags -->
+    <meta name="description" content="AI-powered diplomatic language and cultural teaching platform for the American diplomatic community. Advanced training with 73+ languages and cultural immersion.">
+    <meta name="keywords" content="Diplomatic Training, Language Learning, Cultural Education, American Diplomacy, FSI, Government Training, International Relations">
+    <meta name="author" content="Quartermasters FZC">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00D4FF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" as="style">
+    
+    <!-- Essential CSS First -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Color Palette */
+            --primary: #00D4FF;
+            --secondary: #7C3AED;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gray: #64748B;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+            --gradient-secondary: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+            --gradient-accent: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+            --gradient-dark: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-neon: 0 0 20px rgba(0, 212, 255, 0.3);
+            
+            /* Animations */
+            --transition-fast: 0.15s ease-out;
+            --transition-medium: 0.3s ease-out;
+            --transition-slow: 0.6s ease-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Neural Network Background */
+        #neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Glass Morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Neon Effects */
+        .neon-border {
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3),
+                        inset 0 0 20px rgba(0, 212, 255, 0.1);
+        }
+
+        .neon-text {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Holographic Text */
+        .holographic {
+            background: linear-gradient(45deg, #00D4FF, #7C3AED, #EC4899, #F59E0B);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: holographic-shift 3s ease-in-out infinite;
+        }
+
+        @keyframes holographic-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Pulse Animation */
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            to { box-shadow: 0 0 40px rgba(0, 212, 255, 0.8); }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all var(--transition-medium);
+        }
+
+        nav.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Interactive Elements */
+        .interactive-card {
+            transition: all var(--transition-medium);
+            cursor: pointer;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Metrics Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .metric-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            z-index: 1000;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-neon);
+        }
+
+        /* Dark Mode */
+        .dark {
+            --dark: #F8FAFC;
+            --light: #0F172A;
+            --gray: #94A3B8;
+        }
+
+        .dark body {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .dark nav {
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                height: 100vh;
+                padding: 2rem 1rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Loading Animation - Simplified */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out, visibility 1s ease-out;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0, 212, 255, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Code Playground */
+        .code-playground {
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .code-header {
+            background: #334155;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #ef4444; }
+        .code-dot.yellow { background: #f59e0b; }
+        .code-dot.green { background: #10b981; }
+
+        .code-content {
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* VR Preview */
+        .vr-preview {
+            position: relative;
+            background: var(--gradient-dark);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 400px;
+        }
+
+        .vr-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 10;
+            cursor: pointer;
+            transition: all var(--transition-medium);
+        }
+
+        .vr-overlay:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Chatbot Interface */
+        .chatbot {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            max-width: 400px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all var(--transition-medium);
+        }
+
+        .chatbot.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .chatbot-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatbot-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* Typing Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Additional Animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 1s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .scale-in {
+            transform: scale(0.9);
+            opacity: 0;
+            animation: scaleIn 0.8s ease-out forwards;
+        }
+
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Simplified Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="text-center">
+            <div class="loader mb-6"></div>
+            <div class="text-white text-2xl font-semibold mb-4">FASI AI Platform</div>
+            <div class="text-gray-300" id="loadingText">Initializing...</div>
+        </div>
+    </div>
+
+    <!-- Neural Network Background -->
+    <canvas id="neural-bg"></canvas>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <span class="text-2xl font-bold holographic">🏛️ Diplomatic Language</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="nav-link hover:text-blue-600 transition-colors">Overview</a>
+                    <a href="#metrics" class="nav-link hover:text-blue-600 transition-colors">Live Metrics</a>
+                    <a href="#features" class="nav-link hover:text-blue-600 transition-colors">Features</a>
+                    <a href="#system-details" class="nav-link hover:text-blue-600 transition-colors">System Details</a>
+                    <a href="#playground" class="nav-link hover:text-blue-600 transition-colors">Playground</a>
+                    <a href="#vr-preview" class="nav-link hover:text-blue-600 transition-colors">VR Preview</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-gray-700 hover:text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <!-- Hero Section -->
+    <section id="overview" class="hero flex items-center justify-center relative">
+        <div class="hero-content text-center text-white z-10 max-w-6xl mx-auto px-4">
+            <div class="mb-8 fade-in">
+                <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight">
+                    <span class="holographic">Diplomatic</span>
+                    <br>
+                    <span class="text-4xl md:text-6xl font-light">Language Platform</span>
+                </h1>
+                <div class="text-xl md:text-3xl mb-8 opacity-90 typing-cursor" id="hero-text">
+                    Advanced Training for American Diplomacy
+                </div>
+            </div>
+            
+            <div class="mb-12 slide-up">
+                <div class="glass rounded-2xl p-8 mb-8 inline-block">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <div class="metric-item">
+                            <div class="text-3xl font-bold neon-text" data-count="73">73</div>
+                            <div class="text-sm opacity-80">Languages</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="text-3xl font-bold neon-text" data-count="96.7">96.7%</div>
+                            <div class="text-sm opacity-80">Accuracy</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="text-3xl font-bold neon-text" data-count="5000">5,000</div>
+                            <div class="text-sm opacity-80">Users</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="text-3xl font-bold neon-text">$2.04M</div>
+                            <div class="text-sm opacity-80">Valuation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-8 scale-in">
+                <button class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    🚀 Launch Demo
+                </button>
+                <button class="glass text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    📖 Documentation
+                </button>
+                <a href="https://github.com/Quartermasters-FZC/FASI-eLearning-Platform" target="_blank" class="bg-gray-800 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 inline-block">
+                    ⭐ GitHub
+                </a>
+            </div>
+            
+            <div class="text-center fade-in">
+                <div class="inline-flex items-center space-x-2 glass rounded-full px-6 py-3">
+                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-sm">System Status: Operational</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white">
+            <button id="scroll-down-btn" class="animate-bounce hover:text-blue-300 transition-colors cursor-pointer focus:outline-none" aria-label="Scroll to next section">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Live Metrics Dashboard -->
+    <section id="metrics" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                    <span class="holographic">Live Metrics</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Real-time performance data from our diplomatic training systems
+                </p>
+            </div>
+            
+            <div class="metrics-grid mb-16">
+                <div class="metric-card pulse-glow">
+                    <div class="metric-content">
+                        <div class="text-2xl mb-2">🎤</div>
+                        <div class="text-3xl font-bold mb-2" id="speechAccuracy">96.7%</div>
+                        <div class="text-sm opacity-80">Speech Recognition</div>
+                    </div>
+                </div>
+                
+                <div class="metric-card pulse-glow">
+                    <div class="metric-content">
+                        <div class="text-2xl mb-2">🌍</div>
+                        <div class="text-3xl font-bold mb-2" id="translationQuality">89.2</div>
+                        <div class="text-sm opacity-80">Translation BLEU Score</div>
+                    </div>
+                </div>
+                
+                <div class="metric-card pulse-glow">
+                    <div class="metric-content">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <div class="text-3xl font-bold mb-2" id="responseTime">142ms</div>
+                        <div class="text-sm opacity-80">Avg Response Time</div>
+                    </div>
+                </div>
+                
+                <div class="metric-card pulse-glow">
+                    <div class="metric-content">
+                        <div class="text-2xl mb-2">👥</div>
+                        <div class="text-3xl font-bold mb-2" id="activeUsers">2,847</div>
+                        <div class="text-sm opacity-80">Active Users</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real-time Terminal -->
+            <div class="code-playground max-w-4xl mx-auto">
+                <div class="code-header">
+                    <div class="code-dot red"></div>
+                    <div class="code-dot yellow"></div>
+                    <div class="code-dot green"></div>
+                    <span class="text-gray-300 ml-4 font-mono text-sm">system-monitor.log</span>
+                </div>
+                <div class="code-content">
+                    <div id="terminal-output" class="h-48 overflow-y-auto font-mono text-sm">
+                        <div class="text-green-400">[2024-06-24 15:30:45] INFO: Neural networks initialized successfully</div>
+                        <div class="text-blue-400">[2024-06-24 15:30:46] INFO: Speech models loaded: 73 languages</div>
+                        <div class="text-yellow-400">[2024-06-24 15:30:47] INFO: Translation engines: Online</div>
+                        <div class="text-green-400">[2024-06-24 15:30:48] INFO: Security systems: Active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Architecture -->
+    <section id="architecture" class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                    <span class="holographic">System Architecture</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Modern microservices architecture designed for scalability and security
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="interactive-card glass p-6 rounded-lg">
+                    <div class="text-3xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">AI Services</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Neural networks for speech, translation, and vision processing</p>
+                </div>
+                
+                <div class="interactive-card glass p-6 rounded-lg">
+                    <div class="text-3xl mb-4">🚪</div>
+                    <h3 class="text-xl font-bold mb-2">API Gateway</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Intelligent routing and load balancing</p>
+                </div>
+                
+                <div class="interactive-card glass p-6 rounded-lg">
+                    <div class="text-3xl mb-4">💾</div>
+                    <h3 class="text-xl font-bold mb-2">Data Layer</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Distributed storage with real-time synchronization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Showcase -->
+    <section id="features" class="py-20 bg-gray-100 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                    <span class="holographic">Next-Gen Features</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Advanced capabilities for diplomatic language and cultural training excellence
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8 mb-16">
+                <div class="space-y-8">
+                    <div class="interactive-card glass p-8 rounded-2xl">
+                        <div class="flex items-start space-x-4">
+                            <div class="text-4xl">🎤</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">Neural Speech Analysis</h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                    AI-powered pronunciation scoring with real-time feedback and dialect recognition
+                                </p>
+                                <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-green-400">
+                                    <div>accuracy: 94.7%</div>
+                                    <div>fluency: 87.3%</div>
+                                    <div>rhythm: 91.2%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card glass p-8 rounded-2xl">
+                        <div class="flex items-start space-x-4">
+                            <div class="text-4xl">🌍</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">Quantum Translation</h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                    Context-aware translation with cultural adaptation and regional nuances
+                                </p>
+                                <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-blue-400">
+                                    <div>"Hello" → "مرحبا" (Arabic)</div>
+                                    <div>context: formal_business</div>
+                                    <div>confidence: 98.9%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="interactive-card glass p-8 rounded-2xl">
+                        <div class="flex items-start space-x-4">
+                            <div class="text-4xl">🔒</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">Quantum Security</h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                    Military-grade encryption with quantum-resistant algorithms
+                                </p>
+                                <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-purple-400">
+                                    <div>encryption: AES-256 + RSA-4096</div>
+                                    <div>quantum_safe: TRUE</div>
+                                    <div>compliance: FedRAMP High</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card glass p-8 rounded-2xl">
+                        <div class="flex items-start space-x-4">
+                            <div class="text-4xl">📊</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">Predictive Analytics</h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                    AI-driven insights for personalized learning paths and outcomes
+                                </p>
+                                <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm text-yellow-400">
+                                    <div>learning_velocity: +23%</div>
+                                    <div>predicted_proficiency: B2</div>
+                                    <div>completion_time: 12 weeks</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Code Playground -->
+    <section id="playground" class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                    <span class="holographic">Code Playground</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Experience our APIs with live, interactive code examples
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="code-playground">
+                    <div class="code-header">
+                        <div class="code-dot red"></div>
+                        <div class="code-dot yellow"></div>
+                        <div class="code-dot green"></div>
+                        <span class="text-gray-300 ml-4 font-mono text-sm">speech-analysis.py</span>
+                    </div>
+                    <div class="code-content">
+                        <pre id="code-example-1" class="text-sm"># AI Speech Analysis API
+import fasi_ai
+
+# Initialize the speech analyzer
+analyzer = fasi_ai.SpeechAnalyzer(
+    language="arabic",
+    model="neural-v3",
+    features=["pronunciation", "fluency", "accent"]
+)
+
+# Analyze audio stream
+result = analyzer.analyze_stream(
+    audio_data=audio_stream,
+    target_proficiency="intermediate"
+)
+
+# Get detailed feedback
+feedback = {
+    "accuracy": result.pronunciation_score,
+    "fluency": result.fluency_score,
+    "suggestions": result.improvement_tips,
+    "cultural_notes": result.cultural_context
+}
+
+print(f"Pronunciation: {feedback['accuracy']}%")
+print(f"Fluency: {feedback['fluency']}%")</pre>
+                    </div>
+                </div>
+                
+                <div class="glass p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-6">Live Demo</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Select Language</label>
+                            <select id="language-select" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="arabic">Arabic</option>
+                                <option value="chinese">Chinese</option>
+                                <option value="russian">Russian</option>
+                                <option value="japanese">Japanese</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Audio Input</label>
+                            <button id="record-btn" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-colors">
+                                🎤 Start Recording
+                            </button>
+                        </div>
+                        <div id="analysis-result" class="hidden">
+                            <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                                <div class="text-sm font-mono" id="result-text">
+                                    Analyzing speech patterns...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VR/AR Preview -->
+    <section id="vr-preview" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">
+                    <span class="holographic">Immersive Learning</span>
+                </h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Step into the future with VR/AR language immersion experiences
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl">🥽</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Virtual Reality Classrooms</h3>
+                            <p class="opacity-80">
+                                Immersive 3D environments for practicing real-world scenarios
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl">🌐</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Augmented Reality Support</h3>
+                            <p class="opacity-80">
+                                Overlay digital content onto real-world environments
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="text-3xl">🎮</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Gamified Learning</h3>
+                            <p class="opacity-80">
+                                Interactive challenges and achievements system
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <button class="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                        🚀 Try VR Demo
+                    </button>
+                </div>
+                
+                <div class="vr-preview">
+                    <div class="vr-overlay" id="vr-overlay">
+                        <div class="text-center">
+                            <div class="text-6xl mb-4">🥽</div>
+                            <div class="text-2xl font-bold mb-2">Experience VR Learning</div>
+                            <div class="text-lg opacity-80">Click to enter virtual classroom</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Details & Specifications -->
+    <section id="system-details" class="py-20 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                    <span class="holographic">System Specifications</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Comprehensive technical overview and deployment architecture
+                </p>
+            </div>
+            
+            <!-- Tech Stack Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <div class="interactive-card glass p-6 rounded-lg text-center">
+                    <div class="text-3xl mb-4">⚛️</div>
+                    <h3 class="text-lg font-bold mb-2">Frontend</h3>
+                    <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                        <div>React 18.x</div>
+                        <div>TypeScript</div>
+                        <div>Tailwind CSS</div>
+                        <div>Vite Builder</div>
+                    </div>
+                </div>
+                
+                <div class="interactive-card glass p-6 rounded-lg text-center">
+                    <div class="text-3xl mb-4">🚀</div>
+                    <h3 class="text-lg font-bold mb-2">Backend</h3>
+                    <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                        <div>Node.js 20.x</div>
+                        <div>Express.js</div>
+                        <div>GraphQL</div>
+                        <div>WebSocket</div>
+                    </div>
+                </div>
+                
+                <div class="interactive-card glass p-6 rounded-lg text-center">
+                    <div class="text-3xl mb-4">🧠</div>
+                    <h3 class="text-lg font-bold mb-2">AI/ML</h3>
+                    <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                        <div>TensorFlow</div>
+                        <div>PyTorch</div>
+                        <div>OpenAI API</div>
+                        <div>Speech-to-Text</div>
+                    </div>
+                </div>
+                
+                <div class="interactive-card glass p-6 rounded-lg text-center">
+                    <div class="text-3xl mb-4">💾</div>
+                    <h3 class="text-lg font-bold mb-2">Database</h3>
+                    <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                        <div>PostgreSQL 15</div>
+                        <div>Redis Cache</div>
+                        <div>MongoDB</div>
+                        <div>Elasticsearch</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deployment & Infrastructure -->
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">🏗️ Infrastructure</h3>
+                    <div class="space-y-4">
+                        <div class="glass p-4 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="text-xl">☁️</div>
+                                <div class="font-semibold">Cloud Platform</div>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                AWS GovCloud, Azure Government, Kubernetes orchestration
+                            </div>
+                        </div>
+                        
+                        <div class="glass p-4 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="text-xl">🐳</div>
+                                <div class="font-semibold">Containerization</div>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                Docker containers, Kubernetes deployment, Helm charts
+                            </div>
+                        </div>
+                        
+                        <div class="glass p-4 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="text-xl">🔄</div>
+                                <div class="font-semibold">CI/CD Pipeline</div>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                GitHub Actions, automated testing, security scanning
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">🛡️ Security Features</h3>
+                    <div class="space-y-4">
+                        <div class="glass p-4 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="text-xl">🔐</div>
+                                <div class="font-semibold">Authentication</div>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                Multi-factor auth, SAML 2.0, OAuth 2.0, PIV card support
+                            </div>
+                        </div>
+                        
+                        <div class="glass p-4 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="text-xl">🛡️</div>
+                                <div class="font-semibold">Encryption</div>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                AES-256 at rest, TLS 1.3 in transit, quantum-resistant algorithms
+                            </div>
+                        </div>
+                        
+                        <div class="glass p-4 rounded-lg">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <div class="text-xl">📋</div>
+                                <div class="font-semibold">Compliance</div>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">
+                                FedRAMP High, FISMA, SOC 2 Type II, DoD IL4/IL5 ready
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Specifications -->
+            <div class="glass p-8 rounded-2xl">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">⚡ Performance Specifications</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">5,000+</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">Concurrent Users</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600 mb-2">&lt;150ms</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">API Response Time</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">99.97%</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">Uptime SLA</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-orange-600 mb-2">Auto</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-300">Horizontal Scaling</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Grade Showcase -->
+    <section class="py-20 bg-gradient-to-br from-blue-600 to-purple-700 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">
+                    Investment Grade Platform
+                </h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Independently valued at $2.04 Million by Aliff Capital LLC
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-2xl text-center">
+                    <div class="text-4xl mb-4">💎</div>
+                    <div class="text-3xl font-bold mb-2">$2.04M</div>
+                    <div class="text-lg opacity-80">Professional Valuation</div>
+                </div>
+                
+                <div class="glass p-8 rounded-2xl text-center">
+                    <div class="text-4xl mb-4">🏆</div>
+                    <div class="text-3xl font-bold mb-2">Grade A+</div>
+                    <div class="text-lg opacity-80">Security Rating</div>
+                </div>
+                
+                <div class="glass p-8 rounded-2xl text-center">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <div class="text-3xl font-bold mb-2">99.97%</div>
+                    <div class="text-lg opacity-80">Uptime SLA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot" id="chatbot">
+        <div class="chatbot-header">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <span class="text-blue-600">🤖</span>
+                </div>
+                <div>
+                    <div class="font-semibold">Diplomatic Language Assistant</div>
+                    <div class="text-sm opacity-80">Online</div>
+                </div>
+            </div>
+            <button id="chatbot-close" class="text-white hover:text-gray-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="mb-4">
+                <div class="bg-blue-100 p-3 rounded-lg inline-block">
+                    <div class="text-sm">
+                        👋 Hi! I'm your diplomatic training assistant. Ask me about our language and cultural programs!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <div class="flex space-x-2">
+                <input type="text" id="chatbot-input" placeholder="Ask me anything..." class="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="chatbot-send" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Trigger -->
+    <button id="chatbot-trigger" class="fixed bottom-6 right-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white w-16 h-16 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 z-50">
+        <div class="text-2xl">💬</div>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="glass-dark p-12 rounded-3xl mb-12">
+                    <h2 class="text-4xl font-bold mb-6 holographic">
+                        Ready to Transform Diplomatic Training?
+                    </h2>
+                    <p class="text-xl mb-8 opacity-90">
+                        Join the premier diplomatic language and cultural training program
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="https://quartermasters.me/contact/" target="_blank" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 inline-block">
+                            🚀 Get Started
+                        </a>
+                        <a href="https://quartermasters.me/contact/" target="_blank" class="glass text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 inline-block">
+                            📞 Contact Sales
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 pt-8">
+                    <p class="text-sm opacity-75">
+                        Built with ❤️ by <a href="https://quartermasters.me" class="text-blue-400 hover:text-blue-300">Quartermasters FZC</a> | 
+                        Valued by <a href="https://aliffcapital.com" class="text-blue-400 hover:text-blue-300">Aliff Capital LLC</a>
+                    </p>
+                    <p class="text-sm opacity-75 mt-2">
+                        © 2025 Quartermasters FZC. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Simplified JavaScript -->
+    <script>
+        // Simple and reliable loading system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start loading sequence immediately
+            setTimeout(function() {
+                hideLoadingScreen();
+                initializeApp();
+            }, 800); // Short delay for smooth UX
+        });
+
+        // Fallback to ensure page always shows
+        window.addEventListener('load', function() {
+            setTimeout(hideLoadingScreen, 1000);
+        });
+
+        // Force show page after 2 seconds regardless
+        setTimeout(hideLoadingScreen, 2000);
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const body = document.body;
+            
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+                body.classList.remove('loading');
+            }
+        }
+
+        function initializeApp() {
+            // Initialize basic functionality
+            initNavigation();
+            initThemeToggle();
+            initChatbot();
+            initInteractions();
+            initMetrics();
+            initParticles();
+        }
+
+        // Navigation
+        function initNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const navbar = document.getElementById('navbar');
+            
+            // Smooth scrolling
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Theme Toggle
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+                themeIcon.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+            });
+        }
+
+        // Chatbot
+        function initChatbot() {
+            const chatbotTrigger = document.getElementById('chatbot-trigger');
+            const chatbot = document.getElementById('chatbot');
+            const chatbotClose = document.getElementById('chatbot-close');
+            const chatbotSend = document.getElementById('chatbot-send');
+            const chatbotInput = document.getElementById('chatbot-input');
+            const chatbotMessages = document.getElementById('chatbot-messages');
+
+            const responses = [
+                "Our platform serves the American diplomatic community with 73+ languages and cultural training!",
+                "We provide specialized language training for State Department personnel and diplomatic missions.",
+                "Our security meets government standards with FedRAMP compliance and quantum-resistant encryption.",
+                "Advanced speech recognition technology helps diplomats perfect pronunciation and cultural nuances.",
+                "Immersive VR environments simulate real diplomatic scenarios for practical training.",
+                "The platform supports embassy staff, consular officers, and international relations professionals."
+            ];
+
+            chatbotTrigger.addEventListener('click', () => {
+                chatbot.classList.toggle('active');
+            });
+
+            chatbotClose.addEventListener('click', () => {
+                chatbot.classList.remove('active');
+            });
+
+            function sendMessage() {
+                const message = chatbotInput.value.trim();
+                if (!message) return;
+
+                // Add user message
+                addMessage(message, 'user');
+                chatbotInput.value = '';
+
+                // Add bot response
+                setTimeout(() => {
+                    const response = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(response, 'bot');
+                }, 1000);
+            }
+
+            function addMessage(text, sender) {
+                const div = document.createElement('div');
+                div.className = `mb-4 ${sender === 'user' ? 'text-right' : ''}`;
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `inline-block p-3 rounded-lg max-w-xs ${
+                    sender === 'user' 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-gray-100 text-gray-900'
+                }`;
+                messageDiv.innerHTML = `<div class="text-sm">${text}</div>`;
+                
+                div.appendChild(messageDiv);
+                chatbotMessages.appendChild(div);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+
+            chatbotSend.addEventListener('click', sendMessage);
+            chatbotInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+        }
+
+        // Interactive elements
+        function initInteractions() {
+            // Scroll down button
+            const scrollDownBtn = document.getElementById('scroll-down-btn');
+            if (scrollDownBtn) {
+                scrollDownBtn.addEventListener('click', function() {
+                    const metricsSection = document.getElementById('metrics');
+                    if (metricsSection) {
+                        metricsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+
+            // Record button
+            const recordBtn = document.getElementById('record-btn');
+            const analysisResult = document.getElementById('analysis-result');
+            const resultText = document.getElementById('result-text');
+            
+            if (recordBtn) {
+                recordBtn.addEventListener('click', function() {
+                    if (this.textContent.includes('Start')) {
+                        this.textContent = '⏹️ Stop Recording';
+                        this.className = 'w-full bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 transition-colors animate-pulse';
+                        analysisResult.classList.remove('hidden');
+                        resultText.textContent = 'Recording audio... Speak now!';
+                        
+                        setTimeout(() => {
+                            this.textContent = '🎤 Start Recording';
+                            this.className = 'w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-colors';
+                            resultText.innerHTML = `
+                                <div class="text-green-400">✅ Analysis Complete</div>
+                                <div class="mt-2">
+                                    <div>Pronunciation: 94.2%</div>
+                                    <div>Fluency: 87.8%</div>
+                                    <div>Rhythm: 91.5%</div>
+                                </div>
+                                <div class="mt-2 text-yellow-400">
+                                    💡 Tip: Focus on vowel sounds for better clarity
+                                </div>
+                            `;
+                        }, 3000);
+                    }
+                });
+            }
+
+            // VR overlay
+            const vrOverlay = document.getElementById('vr-overlay');
+            if (vrOverlay) {
+                vrOverlay.addEventListener('click', function() {
+                    alert('VR Demo would launch here in a production environment! 🥽');
+                });
+            }
+        }
+
+        // Live metrics
+        function initMetrics() {
+            const metrics = {
+                speechAccuracy: { element: document.getElementById('speechAccuracy'), value: 96.7 },
+                translationQuality: { element: document.getElementById('translationQuality'), value: 89.2 },
+                responseTime: { element: document.getElementById('responseTime'), value: 142 },
+                activeUsers: { element: document.getElementById('activeUsers'), value: 2847 }
+            };
+
+            // Terminal simulation
+            const terminal = document.getElementById('terminal-output');
+            const messages = [
+                { type: 'info', text: 'Neural network optimization complete' },
+                { type: 'success', text: 'Speech model accuracy improved to 96.8%' },
+                { type: 'warning', text: 'High load detected, scaling services' },
+                { type: 'info', text: 'New user session started' },
+                { type: 'success', text: 'Translation quality benchmark passed' }
+            ];
+
+            setInterval(() => {
+                const message = messages[Math.floor(Math.random() * messages.length)];
+                const timestamp = new Date().toLocaleTimeString();
+                const colors = {
+                    info: 'text-blue-400',
+                    success: 'text-green-400',
+                    warning: 'text-yellow-400'
+                };
+
+                const div = document.createElement('div');
+                div.className = colors[message.type];
+                div.textContent = `[${timestamp}] ${message.type.toUpperCase()}: ${message.text}`;
+
+                terminal.appendChild(div);
+                terminal.scrollTop = terminal.scrollHeight;
+
+                // Keep only last 15 messages
+                while (terminal.children.length > 15) {
+                    terminal.removeChild(terminal.firstChild);
+                }
+            }, 3000);
+
+            // Update metrics periodically
+            setInterval(() => {
+                Object.keys(metrics).forEach(key => {
+                    const metric = metrics[key];
+                    const variation = (Math.random() - 0.5) * 2;
+
+                    if (key === 'responseTime') {
+                        metric.value = Math.max(120, Math.min(200, metric.value + variation));
+                        metric.element.textContent = Math.round(metric.value) + 'ms';
+                    } else if (key === 'activeUsers') {
+                        metric.value = Math.max(2500, Math.min(3000, metric.value + variation * 10));
+                        metric.element.textContent = Math.round(metric.value).toLocaleString();
+                    } else {
+                        metric.value = Math.max(85, Math.min(99, metric.value + variation * 0.1));
+                        metric.element.textContent = metric.value.toFixed(1) + (key === 'translationQuality' ? '' : '%');
+                    }
+                });
+            }, 2000);
+        }
+
+        // Simple particle system
+        function initParticles() {
+            const canvas = document.getElementById('neural-bg');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const particles = [];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function createParticles() {
+                const count = Math.floor((canvas.width * canvas.height) / 20000);
+                particles.length = 0;
+
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 2 + 1
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+
+                    if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+                    if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0, 212, 255, 0.3)';
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            resize();
+            createParticles();
+            animate();
+
+            window.addEventListener('resize', () => {
+                resize();
+                createParticles();
+            });
+        }
+
+        // Hero text animation
+        function typeText(element, text, speed = 100) {
+            element.textContent = '';
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize hero text after loading
+        setTimeout(() => {
+            const heroText = document.getElementById('hero-text');
+            if (heroText) {
+                const texts = [
+                    'Advanced Training for American Diplomacy',
+                    'Specialized State Department Programs',
+                    '73+ Languages for Global Missions',
+                    'Government-Grade Security & Compliance',
+                    'Cultural Training for Diplomatic Excellence'
+                ];
+                let currentIndex = 0;
+
+                function cycleText() {
+                    typeText(heroText, texts[currentIndex]);
+                    currentIndex = (currentIndex + 1) % texts.length;
+                    setTimeout(cycleText, 4000);
+                }
+
+                cycleText();
+            }
+        }, 1000);
+    </script>
+
+    <!-- Load external libraries asynchronously (non-blocking) -->
+    <script>
+        // Load optional libraries asynchronously
+        const scripts = [
+            'https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js',
+            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js',
+            'https://unpkg.com/aos@2.3.1/dist/aos.js'
+        ];
+
+        scripts.forEach(src => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onerror = () => console.log('Optional library failed to load:', src);
+            document.head.appendChild(script);
+        });
+
+        // Load AOS CSS
+        const aosCSS = document.createElement('link');
+        aosCSS.href = 'https://unpkg.com/aos@2.3.1/dist/aos.css';
+        aosCSS.rel = 'stylesheet';
+        document.head.appendChild(aosCSS);
+    </script>
+</body>
+</html>
