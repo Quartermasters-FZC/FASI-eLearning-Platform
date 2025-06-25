@@ -1,0 +1,2 @@
+class CourseFixtures:
+    pass
