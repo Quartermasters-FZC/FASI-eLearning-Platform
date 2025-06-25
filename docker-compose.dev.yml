@@ -240,7 +240,7 @@ services:
     environment:
       - REACT_APP_API_URL=http://localhost:3000
       - REACT_APP_ENV=development
-      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_USEPOLLING=true\n      - WDS_SOCKET_HOST=localhost\n      - WDS_SOCKET_PORT=3100\n      - WDS_SOCKET_PATH=/ws
     volumes:
       - ./frontend/web-app:/app
       - /app/node_modules
@@ -307,8 +307,7 @@ services:
     image: rediscommander/redis-commander:latest
     container_name: elearning_redis_commander
     environment:
-      REDIS_HOSTS: local:elearning_redis:6379
-      REDIS_PASSWORD: dev_password_123
+      REDIS_HOSTS: local:elearning_redis:6379:0:dev_password_123
     ports:
       - "8082:8081"
     depends_on:

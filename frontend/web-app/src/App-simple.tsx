@@ -34,8 +34,8 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const [userRes, coursesRes] = await Promise.all([
-          axios.get('/api/users/profile'),
-          axios.get('/api/content/courses')
+          axios.get('http://localhost:3002/api/profile'),
+          axios.get('http://localhost:3003/api/courses')
         ]);
         setUser(userRes.data.user);
         setCourses(coursesRes.data.courses);
@@ -106,7 +106,7 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post('http://localhost:3001/api/login', {
         email,
         password
       });
@@ -173,8 +173,8 @@ const Profile: React.FC = () => {
     const fetchProfile = async () => {
       try {
         const [userRes, progressRes] = await Promise.all([
-          axios.get('/api/users/profile'),
-          axios.get('/api/users/progress')
+          axios.get('http://localhost:3002/api/profile'),
+          axios.get('http://localhost:3002/api/progress')
         ]);
         setUser(userRes.data.user);
         setProgress(progressRes.data);

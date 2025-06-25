@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Diplomatic Platform - API Testing</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .test-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .test-btn:hover {
+            background: #45a049;
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin: 5px;
+            display: inline-block;
+        }
+        .status.success { background: #4CAF50; }
+        .status.error { background: #f44336; }
+        .status.pending { background: #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ Diplomatic Language Platform</h1>
+        <h2>API Testing Dashboard</h2>
+        <p>Test your application layer services</p>
+
+        <div class="test-section">
+            <h3>🚪 API Gateway (localhost:3000)</h3>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3000', 'gateway-root')">Test Root</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3000/health', 'gateway-health')">Test Health</button>
+            <div id="gateway-status" class="status pending">Not tested</div>
+            <div id="gateway-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Authentication Service (localhost:3001)</h3>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3001', 'auth-root')">Test Root</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3001/health', 'auth-health')">Test Health</button>
+            <div id="auth-status" class="status pending">Not tested</div>
+            <div id="auth-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>👥 User Service (localhost:3002)</h3>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3002', 'user-root')">Test Root</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3002/health', 'user-health')">Test Health</button>
+            <div id="user-status" class="status pending">Not tested</div>
+            <div id="user-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📚 Content Service (localhost:3003)</h3>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3003', 'content-root')">Test Root</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3003/health', 'content-health')">Test Health</button>
+            <div id="content-status" class="status pending">Not tested</div>
+            <div id="content-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧠 AI Services</h3>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:8001', 'speech-root')">Speech (8001)</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:8002', 'nlp-root')">NLP (8002)</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:8003', 'translation-root')">Translation (8003)</button>
+            <div id="ai-status" class="status pending">Not tested</div>
+            <div id="ai-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🌐 Frontend Services</h3>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3100', 'webapp-root')">Web App (3100)</button>
+            <button class="test-btn" onclick="testEndpoint('http://localhost:3200', 'admin-root')">Admin Portal (3200)</button>
+            <div id="frontend-status" class="status pending">Not tested</div>
+            <div id="frontend-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔄 Quick Test All Services</h3>
+            <button class="test-btn" onclick="testAllServices()">Test All Services</button>
+            <div id="overall-status" class="status pending">Click to test all</div>
+        </div>
+    </div>
+
+    <script>
+        async function testEndpoint(url, resultId) {
+            const service = resultId.split('-')[0];
+            const statusEl = document.getElementById(service + '-status');
+            const resultEl = document.getElementById(service + '-result');
+            
+            statusEl.textContent = 'Testing...';
+            statusEl.className = 'status pending';
+            resultEl.style.display = 'block';
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.text();
+                
+                if (response.ok) {
+                    statusEl.textContent = `✅ ${response.status} OK`;
+                    statusEl.className = 'status success';
+                    resultEl.textContent = `Response from ${url}:\n${data}`;
+                } else {
+                    statusEl.textContent = `❌ ${response.status} Error`;
+                    statusEl.className = 'status error';
+                    resultEl.textContent = `Error from ${url}:\n${data}`;
+                }
+            } catch (error) {
+                statusEl.textContent = '❌ Connection Failed';
+                statusEl.className = 'status error';
+                resultEl.textContent = `Failed to connect to ${url}:\n${error.message}`;
+            }
+        }
+
+        async function testAllServices() {
+            const services = [
+                'http://localhost:3000',
+                'http://localhost:3001', 
+                'http://localhost:3002',
+                'http://localhost:3003',
+                'http://localhost:8001',
+                'http://localhost:8002', 
+                'http://localhost:8003',
+                'http://localhost:3100',
+                'http://localhost:3200'
+            ];
+            
+            const overallStatus = document.getElementById('overall-status');
+            overallStatus.textContent = 'Testing all services...';
+            overallStatus.className = 'status pending';
+            
+            let working = 0;
+            let total = services.length;
+            
+            for (let url of services) {
+                try {
+                    const response = await fetch(url, { 
+                        method: 'GET',
+                        timeout: 5000
+                    });
+                    if (response.ok) working++;
+                } catch (error) {
+                    // Service not available
+                }
+            }
+            
+            overallStatus.textContent = `${working}/${total} services running`;
+            overallStatus.className = working >= total/2 ? 'status success' : 'status error';
+        }
+
+        // Auto-test API Gateway on load
+        window.onload = function() {
+            setTimeout(() => {
+                testEndpoint('http://localhost:3000', 'gateway-root');
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

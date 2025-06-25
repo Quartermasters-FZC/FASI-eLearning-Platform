@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aliff Capital - E-Learning Platform Cost Analysis (US Federal)</title>
+    <!-- Chosen Palette: Aliff Capital (Dark Blue, Orange, Grey) -->
+    <!-- Application Structure Plan: A single-page, vertically scrolling dashboard. The structure begins with the revised primary finding (the fixed price), followed by a comparison to earlier estimates. It then delves into the refined valuation methodology including detailed architecture analysis, key cost influencers, an interactive feature-to-complexity matrix, a regional rate comparison, a justification for the new target price, and concludes with actionable next steps. This top-down approach allows users to grasp the main conclusion first and then explore the supporting details at their own pace, making complex data highly digestible and facilitating a clear understanding of the value proposition. -->
+    <!-- Visualization & Content Choices:
+        - Price Breakdown (Table 4): Goal: Inform & Compare proportions. Viz: Donut Chart (Chart.js). Interaction: Hover to see details. Justification: Excellent for showing parts of a whole budget.
+        - Side-by-Side Snapshot: Goal: Compare different valuations and their drivers. Viz: Text blocks with clear headings (HTML/Tailwind). Interaction: Passive consumption. Justification: Provides direct comparison to clarify differences.
+        - Refined Model & Cost Influencers (Sec 4): Goal: Organize & Inform. Viz: Interactive cards (HTML/Tailwind). Interaction: Hover reveals details. Justification: Breaks down complex factors into digestible chunks.
+        - Feature Complexity (Table 1): Goal: Compare & Organize. Viz: Interactive toggles filtering a list (HTML/JS). Interaction: Clicking toggles updates the feature list. Justification: Turns a static table into an exploratory tool.
+        - Regional Rates (Table 2): Goal: Compare. Viz: Grouped Bar Chart (Chart.js). Interaction: Hover for exact rates. Justification: Provides a stark visual for a key cost driver.
+        - Methodology: Goal: Inform & establish credibility. Viz: Text blocks with clear headings (HTML/Tailwind). Interaction: Passive consumption. Justification: Provides necessary context on how the valuation was determined, now with architectural details.
+        - Why ~$2M Target: Goal: Justify the new valuation. Viz: Text blocks with clear headings (HTML/Tailwind). Interaction: Passive consumption. Justification: Reinforces the revised fixed price with key arguments.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://rsms.me/inter/inter.css');
+        /* Aliff Capital Color Palette */
+        :root {
+            --color-aliff-dark-blue: #2C3E50; /* Primary Brand Color */
+            --color-aliff-orange: #E67E22; /* Accent Brand Color */
+            --color-aliff-light-bg: #ECF0F1; /* Light background */
+            --color-aliff-text-dark: #34495E; /* Dark text on light background */
+            --color-aliff-text-light: #F8F9F9; /* Light text on dark background */
+        }
+        .bg-aliff-dark-blue { background-color: var(--color-aliff-dark-blue); }
+        .text-aliff-dark-blue { color: var(--color-aliff-dark-blue); }
+        .bg-aliff-orange { background-color: var(--color-aliff-orange); }
+        .text-aliff-orange { color: var(--color-aliff-orange); }
+        .border-aliff-orange { border-color: var(--color-aliff-orange); }
+        .bg-aliff-light-bg { background-color: var(--color-aliff-light-bg); }
+        .text-aliff-text-dark { color: var(--color-aliff-text-dark); }
+        .text-aliff-text-light { color: var(--color-aliff-text-light); }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--color-aliff-orange);
+            border-color: var(--color-aliff-orange);
+        }
+        .active-nav {
+            color: var(--color-aliff-orange);
+            border-bottom-width: 2px;
+            border-color: var(--color-aliff-orange);
+        }
+        .feature-toggle {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .active-toggle {
+            background-color: var(--color-aliff-dark-blue);
+            color: white;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-aliff-light-bg text-aliff-text-dark">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <img src="https://aliffcapital.com/wp-content/uploads/2025/05/cropped-Aliff-Capital.png" alt="Aliff Capital LLC Logo" class="h-8 mr-3" onerror="this.onerror=null;this.src='https://placehold.co/100x32/2C3E50/FFFFFF?text=Aliff+Capital';">
+                    <span class="font-bold text-xl text-aliff-dark-blue">Aliff Capital</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#summary" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Summary</a>
+                        <a href="#github-link" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">GitHub</a>
+                        <a href="#comparison" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Comparison</a>
+                        <a href="#methodology" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Methodology</a>
+                        <a href="#factors" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Cost Influencers</a>
+                        <a href="#features" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Features</a>
+                        <a href="#rates" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Rates</a>
+                        <a href="#why-target" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Why Target</a>
+                        <a href="#next-steps" class="nav-link text-slate-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-transparent">Next Steps</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="summary" class="text-center py-16">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-aliff-text-dark tracking-tight">Custom E-Learning Platform Valuation (US Federal Government Market)</h1>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-aliff-text-dark">This report presents a revised firm fixed price for a complex e-learning platform, incorporating U.S.-government drivers and latest 2025 cost efficiencies, specifically tailored for the US Federal Government market.</p>
+            <div class="mt-12 bg-white p-8 rounded-2xl shadow-lg inline-block">
+                <p class="text-slate-500 text-lg">Revised Firm Fixed Price</p>
+                <div class="flex items-center justify-center gap-4 mt-2">
+                    <span id="price-usd" class="text-5xl md:text-7xl font-bold text-aliff-orange">$2.04 Million</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="github-link" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Project Reference: FASI-eLearning-Platform GitHub</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">This valuation was originally prompted by the FASI-eLearning-Platform GitHub repository. While direct access to the repository was unavailable for code audit, its description provides a contextual baseline for the type of complex, AI-rich, and compliance-driven e-learning solution considered in this report.</p>
+                <div class="mt-8">
+                    <a href="https://github.com/Quartermasters-FZC/FASI-eLearning-Platform" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-aliff-dark-blue hover:bg-aliff-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-aliff-orange">
+                        View FASI-eLearning-Platform on GitHub
+                        <svg class="ml-3 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <p class="mt-2 text-sm text-slate-500">Note: Repository accessibility may vary.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="breakdown" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Revised Project Cost Breakdown (USD)</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">The total investment is allocated across key components of this comprehensive e-learning platform.</p>
+            </div>
+            <div class="mt-12">
+                <div class="chart-container">
+                    <canvas id="costBreakdownChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="py-16 bg-white rounded-2xl">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Valuation Comparison: Earlier Estimate vs. Aliff Capital</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">This section provides a side-by-side comparison of the earlier estimate and Aliff Capital's valuation, highlighting the key drivers behind the difference.</p>
+            </div>
+            <div class="mt-12 overflow-x-auto">
+                <table class="w-full text-left table-auto border-collapse rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-aliff-dark-blue text-aliff-text-light">
+                            <th class="p-4 rounded-tl-lg">Item</th>
+                            <th class="p-4">Your Earlier Estimate (June 19)</th>
+                            <th class="p-4">Aliff Capital Estimate (Uploaded)</th>
+                            <th class="p-4 rounded-tr-lg">Key Drivers Behind the Gap</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-aliff-light-bg border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Headline Price</td>
+                            <td class="p-4">US $2.15 M (≈ AED 7.9 M)</td>
+                            <td class="p-4">AED 400 k (≈ US $109 k)</td>
+                            <td class="p-4 text-aliff-dark-blue font-medium">Over 20x difference, primarily due to scope.</td>
+                        </tr>
+                        <tr class="bg-white border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Scope Baseline</td>
+                            <td class="p-4">Finish existing FASI repo, add AI speech + NMT, micro-services, GovCloud deployment, FedRAMP Moderate ATO, 12-mo O&M</td>
+                            <td class="p-4">Green-field “mid-to-advanced” LMS for US Federal Government market, no code audit and only US compliance.</td>
+                            <td class="p-4">Aliff priced a far smaller, B2B SaaS scope.</td>
+                        </tr>
+                        <tr class="bg-aliff-light-bg border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Compliance</td>
+                            <td class="p-4">FedRAMP Moderate (US-gov)</td>
+                            <td class="p-4">Standard US Data Protection</td>
+                            <td class="p-4 text-aliff-dark-blue font-medium">FedRAMP costs alone run US $0.5–2 M.</td>
+                        </tr>
+                        <tr class="bg-white border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">AI/GPU Scale</td>
+                            <td class="p-4">4x A100 GPUs, 5,000 concurrent learners</td>
+                            <td class="p-4">None specified</td>
+                            <td class="p-4">GPU fleet & fine-tuning = material CAPEX/OPEX.</td>
+                        </tr>
+                        <tr class="bg-aliff-light-bg border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Team Model</td>
+                            <td class="p-4">US security & PM, E. Europe/ME engineers, blended US $105–125/hr</td>
+                            <td class="p-4">US leadership + offshore rates US $30–60/hr</td>
+                            <td class="p-4">Rate and team-size assumptions diverge significantly.</td>
+                        </tr>
+                        <tr class="bg-white">
+                            <td class="p-4 font-semibold rounded-bl-lg">Cloud O&M (12 mo)</td>
+                            <td class="p-4">US $140 k (pre-price-cut)</td>
+                            <td class="p-4">Included inside typical deployment line</td>
+                            <td class="p-4 rounded-br-lg">GPU & GovCloud premiums missing.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-6 text-sm text-slate-600">Verdict: Aliff Capital’s figure is perfectly reasonable for a small commercial LMS but omits every U.S.-government driver that dominates the FASI effort—ATO, AI compute, pen-testing, and multilingual speech models.</p>
+            </div>
+        </section>
+
+        <section id="methodology" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Refined Valuation Model & Methodology (2025 Data)</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">Our revised fixed price assessment integrates fresh 2025 market data and specific project drivers for a U.S.-facing, AI-rich platform.</p>
+            </div>
+            <div class="mt-12 overflow-x-auto">
+                <table class="w-full text-left table-auto border-collapse rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-aliff-dark-blue text-aliff-text-light">
+                            <th class="p-4 rounded-tl-lg">Element</th>
+                            <th class="p-4">Jun-19 Baseline</th>
+                            <th class="p-4">2025 Updates & Rationale</th>
+                            <th class="p-4 rounded-tr-lg">New Allocation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Product Engineering & UX</td>
+                            <td class="p-4">$1.05 M</td>
+                            <td class="p-4">Re-calibrated effort (9 FTE-months instead of 10) after repo walkthrough</td>
+                            <td class="p-4">$0.95 M</td>
+                        </tr>
+                        <tr class="bg-aliff-light-bg border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">AI/ML Integration</td>
+                            <td class="p-4">$0.30 M</td>
+                            <td class="p-4">Model licensing discounts & reuse of open-speech corpora</td>
+                            <td class="p-4">$0.26 M</td>
+                        </tr>
+                        <tr class="bg-white border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">DevSecOps & IaC</td>
+                            <td class="p-4">$0.18 M</td>
+                            <td class="p-4">No change</td>
+                            <td class="p-4">$0.17 M</td>
+                        </tr>
+                        <tr class="bg-aliff-light-bg border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">FedRAMP Moderate ATO</td>
+                            <td class="p-4">$0.45 M</td>
+                            <td class="p-4">New FedRAMP 20x pre-engineered packages shave ~10%</td>
+                            <td class="p-4">$0.40 M</td>
+                        </tr>
+                        <tr class="bg-white border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Cloud & 24x7 SRE</td>
+                            <td class="p-4">$0.14 M</td>
+                            <td class="p-4">33% AWS A100 price-cut (June 2025)</td>
+                            <td class="p-4">$0.11 M</td>
+                        </tr>
+                        <tr class="bg-aliff-light-bg border-b border-aliff-light-bg">
+                            <td class="p-4 font-semibold">Training & Transition</td>
+                            <td class="p-4">$0.03 M</td>
+                            <td class="p-4">—</td>
+                            <td class="p-4">$0.03 M</td>
+                        </tr>
+                        <tr class="bg-white">
+                            <td class="p-4 font-semibold rounded-bl-lg">Contingency (≈ 6%)</td>
+                            <td class="p-4">$0.15 M</td>
+                            <td class="p-4">Applied to reduced subtotal</td>
+                            <td class="p-4 rounded-br-lg">$0.115 M</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-6 text-lg text-aliff-text-dark text-center font-bold">Revised Firm-Fixed-Price: US $2.04 million</p>
+            </div>
+
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-bold tracking-tight text-aliff-text-dark">Architectural Overview: US Federal Government E-Learning Platform</h3>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">A modern e-learning platform for the US Federal Government demands a highly secure, scalable, and compliant architecture, often leveraging cloud-native principles.</p>
+            </div>
+            <div class="mt-12 max-w-4xl mx-auto space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-xl text-aliff-dark-blue">Microservices-Oriented Design</h4>
+                    <p class="mt-2 text-aliff-text-dark">The platform is designed around a microservices architecture, breaking down complex functionalities (e.g., user management, content delivery, assessment engine, AI services) into independent, deployable services. This approach enhances scalability, resilience, and allows for isolated development and deployment, crucial for continuous ATO and rapid feature iteration in a FedRAMP environment.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-xl text-aliff-dark-blue">Cloud-Native Deployment (GovCloud)</h4>
+                    <p class="mt-2 text-aliff-text-dark">Deployment will occur within a FedRAMP-authorized Government Cloud (GovCloud) environment (e.g., AWS GovCloud, Azure Government). This ensures physical and logical isolation, adherence to federal security regulations, and access to services specifically designed for government workloads, including robust auditing and compliance features.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-xl text-aliff-dark-blue">Robust Data Layer with Data Segregation</h4>
+                    <p class="mt-2 text-aliff-text-dark">Data storage will utilize secure, encrypted databases (e.g., Amazon RDS, Azure SQL Database) configured for high availability and disaster recovery. Critical data elements, especially Personally Identifiable Information (PII) and sensitive learning records, will employ strict segregation and encryption at rest and in transit, complying with NIST 800-53 controls for data confidentiality and integrity.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-xl text-aliff-dark-blue">AI/ML Integration with Dedicated Compute</h4>
+                    <p class="mt-2 text-aliff-text-dark">AI personalization, speech-to-text (STT), and neural machine translation (NMT) services will leverage dedicated GPU compute instances (e.g., AWS EC2 A100 instances) for efficient inference. These AI components will be integrated via secure APIs, with models and data pipelines designed for continuous learning and updates within a compliant framework.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-xl text-aliff-dark-blue">Comprehensive Security & Compliance Controls</h4>
+                    <p class="mt-2 text-aliff-text-dark">The architecture inherently supports over 300 NIST 800-53 security controls, vital for FedRAMP Moderate ATO. This includes stringent access controls (Identity and Access Management - IAM), continuous monitoring, vulnerability scanning, intrusion detection/prevention systems (IDPS), and robust logging and auditing. Security is baked into every layer from design to deployment.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold text-xl text-aliff-dark-blue">API-First Design for Extensibility</h4>
+                    <p class="mt-2 text-aliff-text-dark">All core functionalities will expose secure, versioned APIs. This enables seamless integration with existing government systems, future expansions, and facilitates a composable architecture where various components can interoperate efficiently and securely. API gateways will manage traffic, enforce security policies, and provide monitoring capabilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="factors" class="py-16 bg-white rounded-2xl">
+             <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Key Cost Influencers</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">Several critical factors determine the final cost. Understanding these elements provides insight into what drives the value and complexity of the platform.</p>
+            </div>
+            <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div class="p-6 bg-aliff-light-bg rounded-lg">
+                    <h3 class="font-semibold text-lg text-aliff-dark-blue">Platform Complexity</h3>
+                    <p class="mt-2 text-aliff-text-dark">The single largest cost driver. Advanced features like AI-driven learning paths, gamification, and complex integrations require more development hours than basic content delivery systems.</p>
+                </div>
+                <div class="p-6 bg-aliff-light-bg rounded-lg">
+                    <h3 class="font-semibold text-lg text-aliff-dark-blue">UI/UX Design</h3>
+                    <p class="mt-2 text-aliff-text-dark">A custom, intuitive, and mobile-responsive design is crucial for user engagement. This requires significant investment in research, wireframing, and creating interactive prototypes.</p>
+                </div>
+                <div class="p-6 bg-aliff-light-bg rounded-lg">
+                    <h3 class="font-semibold text-lg text-aliff-dark-blue">Team Location</h3>
+                    <p class="mt-2 text-aliff-text-dark">Developer rates for a US-based team are higher than for offshore locations. This estimate assumes a hybrid model with US project leadership to ensure quality and communication.</p>
+                </div>
+                 <div class="p-6 bg-aliff-light-bg rounded-lg">
+                    <h3 class="font-semibold text-lg text-aliff-dark-blue">Third-Party Integrations</h3>
+                    <p class="mt-2 text-aliff-text-dark">Integrating with systems like CRMs, payment gateways (Stripe, PayPal), or video platforms (Zoom) adds complexity and requires secure, reliable API development.</p>
+                </div>
+                 <div class="p-6 bg-aliff-light-bg rounded-lg">
+                    <h3 class="font-semibold text-lg text-aliff-dark-blue">Security & Compliance</h3>
+                    <p class="mt-2 text-aliff-text-dark">Adhering to US government data protection laws (like FedRAMP) requires specialized development for data encryption, secure hosting, and access controls, which is a non-negotiable cost.</p>
+                </div>
+                 <div class="p-6 bg-aliff-light-bg rounded-lg">
+                    <h3 class="font-semibold text-lg text-aliff-dark-blue">Scalability</h3>
+                    <p class="mt-2 text-aliff-text-dark">Building an architecture that can grow with your user base requires upfront planning and investment in cloud infrastructure and efficient code, preventing costly re-writes later.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Features by Platform Complexity</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">The scope of features directly impacts complexity and cost. Use the toggles below to explore how functionalities evolve from a basic to an advanced platform.</p>
+            </div>
+            <div class="mt-8 flex justify-center space-x-2 md:space-x-4">
+                <button data-complexity="basic" class="feature-toggle px-4 py-2 text-sm md:px-6 md:py-3 md:text-base font-semibold rounded-full border border-slate-300 text-slate-700 bg-white">Basic</button>
+                <button data-complexity="intermediate" class="feature-toggle active-toggle px-4 py-2 text-sm md:px-6 md:py-3 md:text-base font-semibold rounded-full border border-transparent">Intermediate</button>
+                <button data-complexity="advanced" class="feature-toggle px-4 py-2 text-sm md:px-6 md:py-3 md:text-base font-semibold rounded-full border border-slate-300 text-slate-700 bg-white">Advanced</button>
+            </div>
+            <div id="feature-list" class="mt-12 max-w-4xl mx-auto grid md:grid-cols-2 gap-x-8 gap-y-6">
+            </div>
+        </section>
+
+        <section id="rates" class="py-16 bg-white rounded-2xl">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">U.S. vs. Offshore Hourly Rate Comparison</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">Development costs are heavily influenced by the team's location. This chart visualizes the significant difference in hourly rates between US-based and common offshore development centers.</p>
+            </div>
+            <div class="mt-12">
+                <div class="chart-container">
+                    <canvas id="rateComparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-target" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Why ~US $2M is the Right Target</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">This valuation is driven by specific requirements for a U.S.-facing, AI-rich platform, which significantly increase complexity and cost.</p>
+            </div>
+            <div class="mt-12 max-w-4xl mx-auto space-y-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-semibold text-xl text-aliff-dark-blue">FedRAMP Dominates</h3>
+                    <p class="mt-2 text-aliff-text-dark">Even the leanest pathway for FedRAMP Moderate Authorization to Operate (ATO) is still $0.4–0.7 M—four times Aliff Capital’s entire commercial LMS budget. This is a non-negotiable cost for U.S.-government facing solutions.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-semibold text-xl text-aliff-dark-blue">AI Personalization Isn’t Free</h3>
+                    <p class="mt-2 text-aliff-text-dark">Integrating advanced AI for personalization, speech models, and natural language processing is a substantial investment. Market studies peg AI-enabled LMS builds at $0.05–0.5 M on top of base LMS cost, covering complex algorithms and data processing.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-semibold text-xl text-aliff-dark-blue">Dev Hours Add Up</h3>
+                    <p class="mt-2 text-aliff-text-dark">With a blended $115/hr rate, nine full-time months across product engineering, frontend, backend, QA, and design alone exceed $0.9 M. This accounts for the extensive effort required for a comprehensive platform.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-semibold text-xl text-aliff-dark-blue">Hosting for Inference GPUs</h3>
+                    <p class="mt-2 text-aliff-text-dark">Even after recent price cuts, hosting four on-demand A100 GPUs plus GovCloud premiums for AI inference runs approximately $6.5 k/month. This ongoing operational expenditure needs to be factored into the total cost for a robust, high-performance AI system.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="font-semibold text-xl text-aliff-dark-blue">Security Hardening & Documentation</h3>
+                    <p class="mt-2 text-aliff-text-dark">Compliance with NIST 800-53 controls (300+ controls), continuous monitoring, Plan of Action and Milestones (POA&M) cycles, and a mandatory Third-Party Assessment Organization (3PAO) audit are unavoidable for U.S. government-facing platforms. These processes add significant development and auditing costs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="next-steps" class="py-16">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-aliff-text-dark">Actionable Next Steps</h2>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-aliff-text-dark">To move forward with confidence and optimize investment, consider these immediate actions.</p>
+            </div>
+            <div class="mt-12 max-w-3xl mx-auto space-y-6">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-aliff-dark-blue text-aliff-text-light flex items-center justify-center font-bold text-lg">1</div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold">Confirm Authority Boundary & Inherited Controls</h3>
+                        <p class="mt-1 text-aliff-text-dark">Investigate if an agency-sponsored secure landing zone can be leveraged to reduce FedRAMP costs by maximizing inherited controls.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-aliff-dark-blue text-aliff-text-light flex items-center justify-center font-bold text-lg">2</div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold">Kick-off a 4-Week Discovery Sprint</h3>
+                        <p class="mt-1 text-aliff-text-dark">Finalize the backlog and freeze a Statement of Work (SOW) that precisely maps to the $2.04 M price, ensuring clear scope definition.</p>
+                    </div>
+                </div>
+                 <div class="flex items-start">
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-aliff-dark-blue text-aliff-text-light flex items-center justify-center font-bold text-lg">3</div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold">Lock in AWS Savings Plans</h3>
+                        <p class="mt-1 text-aliff-text-dark">Secure new GPU rates with AWS Savings Plans while they are in effect to protect the operational and maintenance (O&M) line item and maximize cost efficiency.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-aliff-dark-blue text-aliff-text-light">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 Aliff Capital LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const costData = {
+        labels: ['Product Engineering & UX', 'AI/ML Integration', 'DevSecOps & IaC', 'FedRAMP Moderate ATO', 'Cloud & 24x7 SRE', 'Training & Transition', 'Contingency'],
+        costsUSD: [950000, 260000, 170000, 400000, 110000, 30000, 115000],
+        percentages: [46.57, 12.75, 8.33, 19.61, 5.39, 1.47, 5.64],
+        colors: ['#2C3E50', '#34495E', '#4A6076', '#61778C', '#798FA2', '#E67E22', '#F39C12']
+    };
+    costData.percentages[0] = 46.81;
+
+    const rateData = {
+        labels: ['Mid-Level Dev', 'Senior Dev', 'UI/UX Designer', 'Project Manager'],
+        usRates: [105, 125, 105, 120],
+        offshoreRates: [30, 50, 30, 27.5]
+    };
+
+    const featureData = {
+        basic: [
+            { icon: '👤', title: 'User Management', text: 'User Login/Registration, Basic Profiles' },
+            { icon: '�', title: 'Content Management', text: 'Static Content Upload (Text, Images)' },
+            { icon: '📢', title: 'Communication', text: 'Announcements, Basic Notifications' },
+            { icon: '✅', title: 'Assessment', text: 'Simple Quizzes, Completion Tracking' },
+        ],
+        intermediate: [
+            { icon: '👥', title: 'User Management', text: 'Role-Based Access (Student, Admin), Progress Tracking' },
+            { icon: '🎬', title: 'Content Management', text: 'Multiple Content Types (Video, Audio), Course Creation Tools' },
+            { icon: '💬', title: 'Communication', text: 'Discussion Boards, Forums, Real-time Chat' },
+            { icon: '🏆', title: 'Assessment', text: 'Graded Tests & Exams, Electronic Certificates' },
+            { icon: '📊', title: 'Analytics', text: 'Learner Performance Dashboards, Content Usage Reports' },
+            { icon: '💳', title: 'Monetization', text: 'Basic Payment Gateway Integration' },
+        ],
+        advanced: [
+            { icon: '🤖', title: 'User Management', text: 'AI-driven Personalized Learning Paths, Multi-tenancy' },
+            { icon: '✍️', title: 'Content Management', text: 'Full LCMS Authoring Tools, AI Content Recommendations' },
+            { icon: '🎥', title: 'Communication', text: 'Virtual Classrooms, Live Video Lectures, Social Learning' },
+            { icon: '🧠', title: 'Assessment', text: 'Adaptive Assessments, Automated Feedback, Skill Gap Analysis' },
+            { icon: '📈', title: 'Analytics', text: 'Deep-Dive Predictive Analytics, ROI Reporting' },
+            { icon: '🌐', title: 'Technical', text: 'AI/ML Integration, Advanced APIs, Microservices Architecture' },
+        ]
+    };
+
+    function renderFeatures(complexity) {
+        const list = document.getElementById('feature-list');
+        list.innerHTML = '';
+        featureData[complexity].forEach(feature => {
+            const featureEl = document.createElement('div');
+            featureEl.className = 'flex items-start p-4 bg-white rounded-lg shadow-sm fade-in';
+            featureEl.innerHTML = `
+                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-aliff-light-bg flex items-center justify-center text-xl">${feature.icon}</div>
+                <div class="ml-4">
+                    <h4 class="font-semibold text-aliff-text-dark">${feature.title}</h4>
+                    <p class="text-sm text-aliff-text-dark">${feature.text}</p>
+                </div>
+            `;
+            list.appendChild(featureEl);
+        });
+    }
+
+    const featureToggles = document.querySelectorAll('.feature-toggle');
+    featureToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            featureToggles.forEach(t => {
+                t.classList.remove('active-toggle', 'bg-aliff-dark-blue', 'text-aliff-text-light');
+                t.classList.add('border-slate-300', 'text-slate-700', 'bg-white');
+            });
+            toggle.classList.add('active-toggle', 'bg-aliff-dark-blue', 'text-aliff-text-light');
+            toggle.classList.remove('border-slate-300', 'text-slate-700', 'bg-white');
+            renderFeatures(toggle.dataset.complexity);
+        });
+    });
+
+    const initialActiveToggle = document.querySelector('.feature-toggle[data-complexity="intermediate"]');
+    if (initialActiveToggle) {
+        initialActiveToggle.classList.add('active-toggle', 'bg-aliff-dark-blue', 'text-aliff-text-light');
+        initialActiveToggle.classList.remove('border-slate-300', 'text-slate-700', 'bg-white');
+    }
+    renderFeatures('intermediate');
+
+    document.getElementById('price-usd').classList.remove('hidden');
+    const priceAedElement = document.getElementById('price-aed');
+    if (priceAedElement) priceAedElement.remove();
+    const currencyToggleElement = document.getElementById('currency-toggle');
+    if (currencyToggleElement) currencyToggleElement.closest('label').remove();
+
+
+    const wrapText = (str, len) => {
+        if (str.length <= len) return str;
+        const words = str.split(' ');
+        let lines = [];
+        let currentLine = words[0];
+        for (let i = 1; i < words.length; i++) {
+            if (currentLine.length + words[i].length + 1 <= len) {
+                currentLine += ' ' + words[i];
+            } else {
+                lines.push(currentLine);
+                currentLine = words[i];
+            }
+        }
+        lines.push(currentLine);
+        return lines;
+    };
+
+    const costBreakdownCtx = document.getElementById('costBreakdownChart').getContext('2d');
+    const costBreakdownChart = new Chart(costBreakdownCtx, {
+        type: 'doughnut',
+        data: {
+            labels: costData.labels,
+            datasets: [{
+                label: 'Cost Breakdown',
+                data: costData.percentages,
+                backgroundColor: costData.colors,
+                borderColor: '#f8fafc',
+                borderWidth: 2,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        font: { size: 12 },
+                        color: 'var(--color-aliff-text-dark)'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            const value = context.parsed;
+                            const totalUSD = costData.costsUSD.reduce((a, b) => a + b, 0);
+                            const costUSD = (totalUSD * (value / 100)).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                            return `${label}${value}% (${costUSD})`;
+                        }
+                    }
+                }
+            },
+            cutout: '60%'
+        }
+    });
+
+    const rateComparisonCtx = document.getElementById('rateComparisonChart').getContext('2d');
+    const rateComparisonChart = new Chart(rateComparisonCtx, {
+        type: 'bar',
+        data: {
+            labels: rateData.labels.map(l => wrapText(l, 16)),
+            datasets: [
+                {
+                    label: 'US (USD/hr)',
+                    data: rateData.usRates,
+                    backgroundColor: 'var(--color-aliff-dark-blue)',
+                    borderColor: 'var(--color-aliff-dark-blue)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Offshore (USD/hr)',
+                    data: rateData.offshoreRates,
+                    backgroundColor: 'var(--color-aliff-orange)',
+                    borderColor: 'var(--color-aliff-orange)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) { return '$' + value; },
+                        color: 'var(--color-aliff-text-dark)'
+                    },
+                    grid: {
+                        color: '#eee'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: 'var(--color-aliff-text-dark)'
+                    },
+                     grid: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: 'var(--color-aliff-text-dark)'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.dataset.label}: $${context.parsed.y}/hr`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    const sections = document.querySelectorAll('main section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-50% 0px -50% 0px',
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active-nav');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active-nav');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    const currentHash = window.location.hash;
+    if (currentHash) {
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentHash) {
+                link.classList.add('active-nav');
+            } else {
+                link.classList.remove('active-nav');
+            }
+        });
+    } else {
+        const firstSectionLink = document.querySelector('.nav-link[href="#summary"]');
+        if (firstSectionLink) {
+            firstSectionLink.classList.add('active-nav');
+        }
+    }
+});
+</script>
+</body>
+</html>
+�

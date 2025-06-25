@@ -4,7 +4,7 @@
   "description": "User Management Service for AI-Powered eLearning Platform",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/server.ts",
+    "dev": "node src/simple-server.js",
     "build": "tsc",
     "start": "node dist/server.js",
     "test": "jest",

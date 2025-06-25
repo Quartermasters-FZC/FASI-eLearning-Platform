@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Diplomatic Language Platform - Service Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .service-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .service-url {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .test-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .test-btn:hover {
+            background: #45a049;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .status.online {
+            background: #4CAF50;
+        }
+        .status.testing {
+            background: #ff9800;
+        }
+        .status.offline {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ Diplomatic Language Platform</h1>
+            <h2>Service Dashboard</h2>
+            <p>Local Docker Environment Testing</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-title">
+                    🐘 PostgreSQL Admin (pgAdmin)
+                </div>
+                <div class="service-url">http://localhost:5050</div>
+                <div>
+                    <strong>Login:</strong><br>
+                    Email: admin@quartermasters.me<br>
+                    Password: admin123
+                </div>
+                <button class="test-btn" onclick="testService('http://localhost:5050', 'pgadmin')">
+                    Open pgAdmin
+                </button>
+                <div id="pgadmin-status" class="status">Click to test</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-title">
+                    🍃 MongoDB Admin
+                </div>
+                <div class="service-url">http://localhost:8081</div>
+                <div>
+                    View course content and documents
+                </div>
+                <button class="test-btn" onclick="testService('http://localhost:8081', 'mongodb')">
+                    Open MongoDB Admin
+                </button>
+                <div id="mongodb-status" class="status">Click to test</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-title">
+                    ⚡ Redis Commander
+                </div>
+                <div class="service-url">http://localhost:8082</div>
+                <div>
+                    Monitor caching and session data
+                </div>
+                <button class="test-btn" onclick="testService('http://localhost:8082', 'redis')">
+                    Open Redis Commander
+                </button>
+                <div id="redis-status" class="status">Click to test</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-title">
+                    🔍 Elasticsearch API
+                </div>
+                <div class="service-url">http://localhost:9200</div>
+                <div>
+                    Search engine for course discovery
+                </div>
+                <button class="test-btn" onclick="testElasticsearch()">
+                    Test Search API
+                </button>
+                <div id="elasticsearch-status" class="status">Click to test</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-title">
+                    🐳 Docker Containers
+                </div>
+                <div>
+                    View running services in Docker Desktop
+                </div>
+                <button class="test-btn" onclick="alert('Open Docker Desktop → Containers tab to view all running services')">
+                    View in Docker Desktop
+                </button>
+                <div class="status online">Docker Required</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-title">
+                    📊 Platform Status
+                </div>
+                <div id="platform-stats">
+                    <div>Services: Loading...</div>
+                    <div>Status: Checking...</div>
+                </div>
+                <button class="test-btn" onclick="checkAllServices()">
+                    Check All Services
+                </button>
+                <div id="overall-status" class="status">Click to check</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testService(url, serviceName) {
+            const statusEl = document.getElementById(serviceName + '-status');
+            statusEl.textContent = 'Testing...';
+            statusEl.className = 'status testing';
+            
+            // Open in new tab
+            window.open(url, '_blank');
+            
+            // Update status
+            setTimeout(() => {
+                statusEl.textContent = 'Opened in new tab';
+                statusEl.className = 'status online';
+            }, 1000);
+        }
+
+        async function testElasticsearch() {
+            const statusEl = document.getElementById('elasticsearch-status');
+            statusEl.textContent = 'Testing API...';
+            statusEl.className = 'status testing';
+            
+            try {
+                const response = await fetch('http://localhost:9200/_cluster/health');
+                const data = await response.json();
+                statusEl.textContent = `Status: ${data.status} (${data.number_of_nodes} nodes)`;
+                statusEl.className = 'status online';
+            } catch (error) {
+                statusEl.textContent = 'Connection failed';
+                statusEl.className = 'status offline';
+            }
+        }
+
+        async function checkAllServices() {
+            const statusEl = document.getElementById('overall-status');
+            const statsEl = document.getElementById('platform-stats');
+            
+            statusEl.textContent = 'Checking...';
+            statusEl.className = 'status testing';
+            
+            let servicesOnline = 0;
+            const services = ['5050', '8081', '8082', '9200'];
+            
+            for (let port of services) {
+                try {
+                    const response = await fetch(`http://localhost:${port}`, { mode: 'no-cors' });
+                    servicesOnline++;
+                } catch (error) {
+                    // Service might be offline
+                }
+            }
+            
+            statsEl.innerHTML = `
+                <div>Services Online: ${servicesOnline}/4</div>
+                <div>Platform: ${servicesOnline >= 3 ? 'Operational' : 'Partial'}</div>
+            `;
+            
+            statusEl.textContent = servicesOnline >= 3 ? 'Platform Ready' : 'Some Issues';
+            statusEl.className = servicesOnline >= 3 ? 'status online' : 'status offline';
+        }
+
+        // Auto-check on load
+        window.onload = function() {
+            setTimeout(checkAllServices, 1000);
+        };
+    </script>
+</body>
+</html>
